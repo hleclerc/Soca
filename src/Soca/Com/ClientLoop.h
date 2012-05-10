@@ -6,7 +6,9 @@
 #include <QString>
 #include <QMap>
 
+#include "../Database/Database.h"
 #include "../Model/Model.h"
+#include "../Sys/BinOut.h"
 
 /**
 */
@@ -20,21 +22,36 @@ public:
 
 private slots:
     void readyRead();
+    void send_data();
 
 signals:
-    void _load( Model *m );
+    void _load( Model *m ); ///< dummy signal
 
 private:
     struct LoadCallback {
         QObject *receiver;
-        const char *slot;
+        const char *member;
     };
 
-    /// find a new callback id
-    int n_callback() const;
+    // parse
+    void rep_load( int n_callback, qint64 m );
 
+    #define SIPE_CHARP char *
+    #define SIPE_CLASS
+    #include "ClientLoop_parser.h"
+
+    // helpers
+    int n_callback() const; ///< find a new callback id
+    void out_sig(); ///< signal that there something to send
+
+    //
+    Database db;
+
+    BinOut out; ///< tmp buffer (to be sent to tcpSocket)
     QTcpSocket *tcpSocket;
     QMap<int,LoadCallback> load_callbacks;
+
+    bool out_signaled;
 };
 
 #endif // CLIENTLOOP_H

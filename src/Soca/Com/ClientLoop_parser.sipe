@@ -1,0 +1,5 @@
+rep_load        = 'L' uint32_bin_le[ v ] uint32_bin_le[ l ] { rep_load( sipe_data->v, sipe_data->l ); }
+
+main = (
+    rep_load
+)**

@@ -7,21 +7,25 @@
 */
 class BinOut {
 public:
-    BinOut &BinOut::operator<<( const QString &str ) {
+    BinOut &operator<<( const QString &str ) {
         QByteArray tmp = str.toAscii();
         *this << int( tmp.size() );
-        data.append( tmp );
+        _data.append( tmp );
         return *this;
     }
 
     template<class T>
     BinOut &operator<<( const T &v ) {
-        data.append( reinterpret_cast<const char *>( &v ), sizeof( T ) );
+        _data.append( reinterpret_cast<const char *>( &v ), sizeof( T ) );
         return *this;
     }
 
+    void clear() { _data.clear(); }
+
+    const QByteArray &data() const { return _data; }
+
 private:
-    QByteArray data;
+    QByteArray _data;
 };
 
 #endif // BINOUT_H
