@@ -1,5 +1,5 @@
+#include "../Sys/BinOut.h"
 #include "ClientLoop.h"
-#include <QDataStream>
 #include <QTimer>
 
 ClientLoop::ClientLoop( const QHostAddress &address, quint16 port ) {
@@ -9,18 +9,22 @@ ClientLoop::ClientLoop( const QHostAddress &address, quint16 port ) {
     tcpSocket->connectToHost( address, port );
 }
 
-void ClientLoop::load( QString addr, QObject *receiver, const char *slot ) {
+void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
     int n = n_callback();
 
     LoadCallback &lc = load_callbacks[ n ];
     lc.receiver = receiver;
-    lc.slot = slot;
+    lc.slot = member;
 
-    //    QDataStream qd( tcpSocket );
-    //    qd << 'L';
-    //    qd << n;
-    //    qd << addr.toAscii();
-    QTimer::singleShot( 0, receiver, slot );
+    qDebug() << n;
+
+    BinOut qd( tcpSocket );
+    qd << 'L' << n << addr;
+
+    // hum
+    //connect( this, SIGNAL(_load(Model *)), receiver, member );
+    //emit _load( 0 );
+    //disconnect( this, SIGNAL(_load(Model *)), receiver, member );
 }
 
 

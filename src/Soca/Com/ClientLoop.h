@@ -16,10 +16,13 @@ public:
     ClientLoop( const QHostAddress &address, quint16 port );
 
     /// ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
-    void load( QString addr, QObject *receiver, const char *slot );
+    void load( QString addr, QObject *receiver, const char *member );
 
 private slots:
     void readyRead();
+
+signals:
+    void _load( Model *m );
 
 private:
     struct LoadCallback {

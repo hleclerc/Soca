@@ -11,7 +11,7 @@ class MyApp : public QObject {
 public:
 
 private slots:
-    virtual void onload( Model *m ) {
+    void onload( Model *m ) {
         qDebug() << m;
     }
 };
