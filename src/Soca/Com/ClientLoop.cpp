@@ -1,4 +1,5 @@
 #include "ClientLoop.h"
+#include <QTimer>
 
 ClientLoop::ClientLoop( const QHostAddress &address, quint16 port ) {
     tcpSocket = new QTcpSocket( this );

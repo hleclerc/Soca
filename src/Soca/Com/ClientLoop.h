@@ -11,6 +11,7 @@ class ClientLoop : public QObject {
 public:
     ClientLoop( const QHostAddress &address, quint16 port );
 
+
 private slots:
     void readyRead();
 
