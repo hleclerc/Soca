@@ -1,3 +1,6 @@
+rep_creation    = 'N' uint32_bin_le[ v ]  { cmd_creation( sipe_data->w, sipe_data->v ); }
+rep_load_ptr    = 'l' uint64_bin_le[ v ]  { cmd_load_ptr( sipe_data->u, sipe_data->v ); }
+rep_change      = 'C' uint32_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data->w ); }
 rep_load        = 'L' uint32_bin_le[ v ] uint32_bin_le[ l ] { rep_load( sipe_data->v, sipe_data->l ); }
 
 main = (

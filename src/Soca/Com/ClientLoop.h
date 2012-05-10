@@ -42,7 +42,7 @@ private:
 
     // helpers
     int n_callback() const; ///< find a new callback id
-    void out_sig(); ///< signal that there something to send
+    void out_sig(); ///< signal that there is something to send
 
     //
     Database db;

@@ -27,7 +27,7 @@ void ClientLoop::rep_load( int n_callback, qint64 m ) {
         LoadCallback &lc = load_callbacks[ n_callback ];
 
         connect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
-        emit _load( 0 );
+        emit _load( db.model( m ) );
         disconnect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
 
         load_callbacks.remove( n_callback );
