@@ -9,7 +9,7 @@
 class Database {
 public:
     Database();
-    Model *model( m ) const;
+    Model *model( qint64 m ) const;
 
     QMap<qint64,Model *> model_map; ///< server_id -> local Model *
 };
