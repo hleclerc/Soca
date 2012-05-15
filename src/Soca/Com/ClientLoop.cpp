@@ -22,6 +22,10 @@ void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
     // hum
 }
 
+void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
+    qDebug() << QString( type_str, type_len ) << " " << m;
+}
+
 void ClientLoop::rep_load( int n_callback, qint64 m ) {
     if ( load_callbacks.contains( n_callback ) ) {
         LoadCallback &lc = load_callbacks[ n_callback ];
@@ -32,6 +36,9 @@ void ClientLoop::rep_load( int n_callback, qint64 m ) {
 
         load_callbacks.remove( n_callback );
     }
+}
+
+void ClientLoop::rep_end() {
 }
 
 void ClientLoop::out_sig() {
@@ -48,6 +55,8 @@ void ClientLoop::readyRead() {
 }
 
 void ClientLoop::send_data() {
+    out << 'E';
+
     tcpSocket->write( out.data() );
     out_signaled = false;
     out.clear();

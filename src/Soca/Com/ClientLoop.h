@@ -34,7 +34,9 @@ private:
     };
 
     // parse
+    void rep_creation( qint64 m, const char *type_str, int type_len );
     void rep_load( int n_callback, qint64 m );
+    void rep_end();
 
     #define SIPE_CHARP char *
     #define SIPE_CLASS
