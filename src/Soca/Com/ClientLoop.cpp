@@ -18,12 +18,11 @@ void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
 
     out << 'L' << n << addr;
     out_sig();
-
-    // hum
 }
 
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
-    qDebug() << QString( type_str, type_len ) << " " << m;
+    std::string s( type_str, type_str + type_len );
+    qDebug() << "CREA " << QLatin1String( s.c_str() ) << " " << m;
 }
 
 void ClientLoop::rep_load( int n_callback, qint64 m ) {
@@ -56,6 +55,8 @@ void ClientLoop::readyRead() {
 
 void ClientLoop::send_data() {
     out << 'E';
+
+    qDebug() << "SENT " << out.data().size();
 
     tcpSocket->write( out.data() );
     out_signaled = false;
