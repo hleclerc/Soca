@@ -1,3 +1,4 @@
+#include "../Model/Directory.h"
 #include "ClientLoop.h"
 #include <QTimer>
 
@@ -23,6 +24,24 @@ void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
     std::string s( type_str, type_str + type_len );
     qDebug() << "CREA " << QLatin1String( s.c_str() ) << " " << m;
+
+    Model *r = 0;
+    if ( s == "Lst" ) r = new Lst;
+    else if ( s == "Directory" ) r = new Directory;
+
+    model_map[ m ] = r;
+}
+
+void ClientLoop::rep_update_ptr( qint64 m, qint64 info ) {
+    if ( Model *p = model_map[ m ] )
+        p->_set( info, model_stack, string_stack );
+    qDebug() << "UPDATE " << m << " " << info;
+}
+
+void ClientLoop::rep_update_int( qint64 m, int info ) {
+    if ( Model *p = model_map[ m ] )
+        p->_set( info, model_stack, string_stack );
+    qDebug() << "UPDATE " << m << " " << info;
 }
 
 void ClientLoop::rep_load( qint64 m, int n_callback ) {
@@ -37,9 +56,9 @@ void ClientLoop::rep_load( qint64 m, int n_callback ) {
     }
 }
 
-void ClientLoop::rep_p_z() {
-    qDebug() << "REP P_Z ";
-    stack << 0;
+void ClientLoop::rep_push( qint64 m ) {
+    qDebug() << "PUSH " << model_map[ m ];
+    model_stack << ( model_map.contains( m ) ? model_map[ m ] : 0 );
 }
 
 void ClientLoop::rep_end() {

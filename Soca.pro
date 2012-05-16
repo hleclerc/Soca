@@ -3,14 +3,20 @@ SOURCES += \
     src/Soca/Com/ClientLoop.cpp \
     src/Soca/Model/Model.cpp \
     tests/MyApp.cpp \
-    src/Soca/Database/Database.cpp
+    src/Soca/Database/Database.cpp \
+    src/Soca/Model/Lst.cpp \
+    src/Soca/Model/Directory.cpp \
+    src/Soca/Model/ModelWithAttr.cpp
 
 HEADERS += \
     src/Soca/Com/ClientLoop.h \
     src/Soca/Model/Model.h \
     tests/MyApp.h \
     src/Soca/Sys/BinOut.h \
-    src/Soca/Database/Database.h
+    src/Soca/Database/Database.h \
+    src/Soca/Model/Lst.h \
+    src/Soca/Model/Directory.h \
+    src/Soca/Model/ModelWithAttr.h
 
 INCLUDEPATH += \
     src

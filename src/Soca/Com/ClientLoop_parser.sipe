@@ -1,13 +1,18 @@
 rep_load_ptr    = 'l' uint64_bin_le[ v ]  { cmd_load_ptr( sipe_data->u, sipe_data->v ); }
 rep_change      = 'C' uint64_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data->w ); }
 
+rep_update_int  = 'U' uint64_bin_le[ model_id ] uint32_bin_le[ len ] { rep_update_int( sipe_data->model_id, sipe_data->len ); }
+rep_update_ptr  = 'V' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_update_ptr( sipe_data->model_id, sipe_data->ptr ); }
 rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
 rep_load        = 'L' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_load( sipe_data->model_id, sipe_data->callback ); }
-rep_p_z         = 'Z' { rep_p_z(); }
+rep_push        = 'P' uint64_bin_le[ model_id ] { rep_push( sipe_data->model_id ); }
 rep_end         = 'E' { rep_end(); }
 
 main = (
+    rep_update_int |
+    rep_update_ptr |
     rep_creation |
     rep_load |
+    rep_push |
     rep_end
 )**
