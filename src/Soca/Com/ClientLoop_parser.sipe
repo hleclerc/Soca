@@ -3,6 +3,7 @@ rep_change      = 'C' uint64_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data-
 
 rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
 rep_load        = 'L' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_load( sipe_data->model_id, sipe_data->callback ); }
+rep_p_z         = 'Z' { rep_p_z(); }
 rep_end         = 'E' { rep_end(); }
 
 main = (

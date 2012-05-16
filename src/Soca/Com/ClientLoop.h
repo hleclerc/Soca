@@ -35,7 +35,8 @@ private:
 
     // parse
     void rep_creation( qint64 m, const char *type_str, int type_len );
-    void rep_load( int n_callback, qint64 m );
+    void rep_load( qint64 m, int n_callback );
+    void rep_p_z(); ///< push 0 on the stack
     void rep_end();
 
     #define SIPE_CHARP char *
@@ -51,6 +52,7 @@ private:
 
     BinOut out; ///< tmp buffer (to be sent to tcpSocket)
     QTcpSocket *tcpSocket;
+    QVector<Model *> stack;
     QMap<int,LoadCallback> load_callbacks;
 
     bool out_signaled;

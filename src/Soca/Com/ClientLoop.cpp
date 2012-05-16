@@ -25,7 +25,7 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
     qDebug() << "CREA " << QLatin1String( s.c_str() ) << " " << m;
 }
 
-void ClientLoop::rep_load( int n_callback, qint64 m ) {
+void ClientLoop::rep_load( qint64 m, int n_callback ) {
     if ( load_callbacks.contains( n_callback ) ) {
         LoadCallback &lc = load_callbacks[ n_callback ];
 
@@ -37,7 +37,13 @@ void ClientLoop::rep_load( int n_callback, qint64 m ) {
     }
 }
 
+void ClientLoop::rep_p_z() {
+    qDebug() << "REP P_Z ";
+    stack << 0;
+}
+
 void ClientLoop::rep_end() {
+    qDebug() << "REP END ";
 }
 
 void ClientLoop::out_sig() {
