@@ -15,9 +15,11 @@ public:
     };
     ModelWithAttr();
 
+    virtual void write_str( QDebug dbg ) const;
     virtual bool _set( int size, QVector<Model *> &model_stack, QVector<QString> &string_stack );
 
-    bool has_attr( QString key ) const;
+    Model *attr( QString key ) const;
+    int attr_index( QString key ) const;
 
     QVector<Attr> _data;
 };

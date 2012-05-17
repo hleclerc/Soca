@@ -6,7 +6,12 @@ SOURCES += \
     src/Soca/Database/Database.cpp \
     src/Soca/Model/Lst.cpp \
     src/Soca/Model/Directory.cpp \
-    src/Soca/Model/ModelWithAttr.cpp
+    src/Soca/Model/ModelWithAttr.cpp \
+    src/Soca/Model/Val.cpp \
+    src/Soca/Model/Str.cpp \
+    src/Soca/Model/Path.cpp \
+    src/Soca/Model/Ptr.cpp \
+    src/Soca/Model/ModelWithAttrAndName.cpp
 
 HEADERS += \
     src/Soca/Com/ClientLoop.h \
@@ -16,7 +21,12 @@ HEADERS += \
     src/Soca/Database/Database.h \
     src/Soca/Model/Lst.h \
     src/Soca/Model/Directory.h \
-    src/Soca/Model/ModelWithAttr.h
+    src/Soca/Model/ModelWithAttr.h \
+    src/Soca/Model/Val.h \
+    src/Soca/Model/Str.h \
+    src/Soca/Model/Path.h \
+    src/Soca/Model/Ptr.h \
+    src/Soca/Model/ModelWithAttrAndName.h
 
 INCLUDEPATH += \
     src
@@ -24,13 +34,6 @@ INCLUDEPATH += \
 QT += network
 
 OTHER_FILES += \
-    src/Soca/Com/ClientLoop_parser.sipe
+    src/Soca/Com/ClientLoop_parser.sipe \
+    update_parser.sh
 
-
-sipe.commands = mkdir -p ext; cd ext; test -e Sipe || ( test -e ../../Sipe && ln -s `pwd`/../../Sipe . ) || git clone git@github.com:hleclerc/Sipe.git
-sipe.target = sipe
-QMAKE_EXTRA_TARGETS += sipe
-
-# update_parser.depends += sipe
-update_parser.commands = ext/Sipe/sipe -o ../Soca/src/Soca/Com/ClientLoop_parser.h ../Soca/src/Soca/Com/ClientLoop_parser.sipe
-QMAKE_EXTRA_TARGETS += update_parser

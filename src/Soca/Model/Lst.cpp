@@ -4,6 +4,13 @@
 Lst::Lst() {
 }
 
+void Lst::write_str( QDebug dbg ) const {
+    dbg.nospace() << "[";
+    for( int i = 0; i < _data.size(); ++i )
+        _data[ i ]->write_str( dbg.nospace() << ( i ? ", " : "" ) );
+    dbg.nospace() << "]";
+}
+
 bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
     bool res = false;
 
@@ -27,6 +34,5 @@ bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
     }
 
     model_stack.resize( model_stack.size() - size );
-    qDebug() << "-> " << _data;
     return res;
 }

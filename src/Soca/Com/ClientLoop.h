@@ -34,11 +34,13 @@ private:
     };
 
     // parse
+    void rep_update_PI32( qint64 m, qint32 info ); ///<
+    void rep_update_PI64( qint64 m, qint64 info ); ///<
+    void rep_update_cstr( qint64 m, const char *type_str, int type_len ); ///<
+    void rep_push_string( const char *str, int len ); ///<
+    void rep_push_model( qint64 m ); ///<
     void rep_creation( qint64 m, const char *type_str, int type_len );
-    void rep_update_ptr( qint64 m, qint64 info ); ///<
-    void rep_update_int( qint64 m, int info ); ///<
     void rep_load( qint64 m, int n_callback );
-    void rep_push( qint64 m ); ///<
     void rep_end();
 
     #define SIPE_CHARP char *

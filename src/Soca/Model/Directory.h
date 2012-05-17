@@ -3,7 +3,8 @@
 
 #include "Lst.h"
 
-/***/
+/**
+*/
 class Directory : public Lst {
 public:
     Directory();

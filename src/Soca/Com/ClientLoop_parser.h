@@ -21,9 +21,9 @@ struct SipeData {
 
     void *_inp_cont;
     SIPE_CHARP _mark[ 1 ];
-    unsigned long model_id;
+    quint64 model_id;
     unsigned len;
-    unsigned long ptr;
+    quint64 ptr;
     char *str;
     unsigned callback;
 };
@@ -48,21 +48,21 @@ l_1: if ( *data != 'U' ) goto l_0;
      INCR( 10 )
      INCR( 11 )
      data = sipe_data->_mark[ 0 ];
-     { sipe_data->model_id  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 12 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 13 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 14 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 15 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
      INCR( 16 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
      INCR( 17 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
      INCR( 18 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
      INCR( 19 )
      { sipe_data->len  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 20 )
@@ -71,7 +71,7 @@ l_1: if ( *data != 'U' ) goto l_0;
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 22 )
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
-     { rep_update_int( sipe_data->model_id, sipe_data->len ); }
+     { rep_update_PI32( sipe_data->model_id, sipe_data->len ); }
 l_3: INCR( 23 )
      goto l_1;
 l_0: if ( *data != 'V' ) goto l_2;
@@ -93,40 +93,40 @@ l_0: if ( *data != 'V' ) goto l_2;
      INCR( 38 )
      INCR( 39 )
      data = sipe_data->_mark[ 0 ];
-     { sipe_data->model_id  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 40 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 41 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 42 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 43 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
      INCR( 44 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
      INCR( 45 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
      INCR( 46 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
      INCR( 47 )
-     { sipe_data->ptr  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     { sipe_data->ptr  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 48 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 49 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 50 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 51 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
      INCR( 52 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
      INCR( 53 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
      INCR( 54 )
-     { sipe_data->ptr += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
-     { rep_update_ptr( sipe_data->model_id, sipe_data->ptr ); }
+     { sipe_data->ptr += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { rep_update_PI64( sipe_data->model_id, sipe_data->ptr ); }
      goto l_3;
-l_2: if ( *data != 'N' ) goto l_4;
+l_2: if ( *data != 'W' ) goto l_4;
      INCR( 55 )
      sipe_data->_mark[ 0 ] = data;
      INCR( 56 )
@@ -141,21 +141,21 @@ l_2: if ( *data != 'N' ) goto l_4;
      INCR( 65 )
      INCR( 66 )
      data = sipe_data->_mark[ 0 ];
-     { sipe_data->model_id  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 67 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 68 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 69 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 70 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
      INCR( 71 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
      INCR( 72 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
      INCR( 73 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
      INCR( 74 )
      { sipe_data->len  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 75 )
@@ -165,51 +165,57 @@ l_2: if ( *data != 'N' ) goto l_4;
      INCR( 77 )
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
      { sipe_data->str = data + 1; data += sipe_data->len;  }
-     { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
+     { rep_update_cstr( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
      goto l_3;
-l_4: if ( *data != 'L' ) goto l_5;
+l_4: if ( *data != 'p' ) goto l_5;
      INCR( 78 )
      sipe_data->_mark[ 0 ] = data;
      INCR( 79 )
      INCR( 80 )
      INCR( 81 )
+     data = sipe_data->_mark[ 0 ];
+     { sipe_data->len  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 82 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 83 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 84 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->str = data + 1; data += sipe_data->len;  }
+     { rep_push_string( sipe_data->str, sipe_data->len ); }
+     goto l_3;
+l_5: if ( *data != 'P' ) goto l_6;
      INCR( 85 )
+     sipe_data->_mark[ 0 ] = data;
      INCR( 86 )
      INCR( 87 )
      INCR( 88 )
      INCR( 89 )
-     data = sipe_data->_mark[ 0 ];
-     { sipe_data->model_id  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 90 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 91 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 92 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     data = sipe_data->_mark[ 0 ];
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 93 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 94 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 95 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 96 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
      INCR( 97 )
-     { sipe_data->callback  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
      INCR( 98 )
-     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
      INCR( 99 )
-     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) << 16; }
-     INCR( 100 )
-     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) << 24; }
-     { rep_load( sipe_data->model_id, sipe_data->callback ); }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     { rep_push_model( sipe_data->model_id ); }
      goto l_3;
-l_5: if ( *data != 'P' ) goto l_6;
-     INCR( 101 )
+l_6: if ( *data != 'N' ) goto l_7;
+     INCR( 100 )
      sipe_data->_mark[ 0 ] = data;
+     INCR( 101 )
      INCR( 102 )
      INCR( 103 )
      INCR( 104 )
@@ -217,28 +223,80 @@ l_5: if ( *data != 'P' ) goto l_6;
      INCR( 106 )
      INCR( 107 )
      INCR( 108 )
-     data = sipe_data->_mark[ 0 ];
-     { sipe_data->model_id  = (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 109 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 110 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 111 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     data = sipe_data->_mark[ 0 ];
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 112 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
      INCR( 113 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
      INCR( 114 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
      INCR( 115 )
-     { sipe_data->model_id += (unsigned long)*reinterpret_cast<const unsigned char *>( data ) << 56; }
-     { rep_push( sipe_data->model_id ); }
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     INCR( 116 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     INCR( 117 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     INCR( 118 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     INCR( 119 )
+     { sipe_data->len  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     INCR( 120 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     INCR( 121 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 16; }
+     INCR( 122 )
+     { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { sipe_data->str = data + 1; data += sipe_data->len;  }
+     { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
      goto l_3;
-l_6: if ( *data != 'E' ) goto l_7;
+l_7: if ( *data != 'L' ) goto l_8;
+     INCR( 123 )
+     sipe_data->_mark[ 0 ] = data;
+     INCR( 124 )
+     INCR( 125 )
+     INCR( 126 )
+     INCR( 127 )
+     INCR( 128 )
+     INCR( 129 )
+     INCR( 130 )
+     INCR( 131 )
+     INCR( 132 )
+     INCR( 133 )
+     INCR( 134 )
+     data = sipe_data->_mark[ 0 ];
+     { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     INCR( 135 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     INCR( 136 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 16; }
+     INCR( 137 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 24; }
+     INCR( 138 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 32; }
+     INCR( 139 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 40; }
+     INCR( 140 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 48; }
+     INCR( 141 )
+     { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) << 56; }
+     INCR( 142 )
+     { sipe_data->callback  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
+     INCR( 143 )
+     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) <<  8; }
+     INCR( 144 )
+     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) << 16; }
+     INCR( 145 )
+     { sipe_data->callback += *reinterpret_cast<const unsigned char *>( data ) << 24; }
+     { rep_load( sipe_data->model_id, sipe_data->callback ); }
+     goto l_3;
+l_8: if ( *data != 'E' ) goto l_9;
      { rep_end(); }
      goto l_3;
-l_7: sipe_data->_inp_cont = &&l_7;
+l_9: sipe_data->_inp_cont = &&l_9;
      return 1;
 p_0: sipe_data->_inp_cont = &&c_0; return 0;
 p_1: sipe_data->_inp_cont = &&c_1; return 0;
@@ -356,6 +414,36 @@ p_112:sipe_data->_inp_cont = &&c_112; return 0;
 p_113:sipe_data->_inp_cont = &&c_113; return 0;
 p_114:sipe_data->_inp_cont = &&c_114; return 0;
 p_115:sipe_data->_inp_cont = &&c_115; return 0;
+p_116:sipe_data->_inp_cont = &&c_116; return 0;
+p_117:sipe_data->_inp_cont = &&c_117; return 0;
+p_118:sipe_data->_inp_cont = &&c_118; return 0;
+p_119:sipe_data->_inp_cont = &&c_119; return 0;
+p_120:sipe_data->_inp_cont = &&c_120; return 0;
+p_121:sipe_data->_inp_cont = &&c_121; return 0;
+p_122:sipe_data->_inp_cont = &&c_122; return 0;
+p_123:sipe_data->_inp_cont = &&c_123; return 0;
+p_124:sipe_data->_inp_cont = &&c_124; return 0;
+p_125:sipe_data->_inp_cont = &&c_125; return 0;
+p_126:sipe_data->_inp_cont = &&c_126; return 0;
+p_127:sipe_data->_inp_cont = &&c_127; return 0;
+p_128:sipe_data->_inp_cont = &&c_128; return 0;
+p_129:sipe_data->_inp_cont = &&c_129; return 0;
+p_130:sipe_data->_inp_cont = &&c_130; return 0;
+p_131:sipe_data->_inp_cont = &&c_131; return 0;
+p_132:sipe_data->_inp_cont = &&c_132; return 0;
+p_133:sipe_data->_inp_cont = &&c_133; return 0;
+p_134:sipe_data->_inp_cont = &&c_134; return 0;
+p_135:sipe_data->_inp_cont = &&c_135; return 0;
+p_136:sipe_data->_inp_cont = &&c_136; return 0;
+p_137:sipe_data->_inp_cont = &&c_137; return 0;
+p_138:sipe_data->_inp_cont = &&c_138; return 0;
+p_139:sipe_data->_inp_cont = &&c_139; return 0;
+p_140:sipe_data->_inp_cont = &&c_140; return 0;
+p_141:sipe_data->_inp_cont = &&c_141; return 0;
+p_142:sipe_data->_inp_cont = &&c_142; return 0;
+p_143:sipe_data->_inp_cont = &&c_143; return 0;
+p_144:sipe_data->_inp_cont = &&c_144; return 0;
+p_145:sipe_data->_inp_cont = &&c_145; return 0;
 }
 #ifdef SIPE_CLASS
 int parse( SIPE_CHARP beg, SIPE_CHARP end ) {

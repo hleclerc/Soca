@@ -10,6 +10,7 @@ class Lst : public Model {
 public:
     Lst();
 
+    virtual void write_str( QDebug dbg ) const;
     virtual bool _set( int size, QVector<Model *> &model_stack, QVector<QString> &string_stack );
 
     QVector<Model *> _data;
