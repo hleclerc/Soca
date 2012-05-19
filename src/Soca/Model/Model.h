@@ -1,10 +1,14 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QtGlobal>
-#include <QVector>
-#include <QString>
-#include <QDebug>
+#ifdef METIL_COMP_DIRECTIVE
+#pragma inc_path /usr/include/qt4
+#endif // METIL_COMP_DIRECTIVE
+
+#include <QtCore/QtGlobal>
+#include <QtCore/QVector>
+#include <QtCore/QString>
+#include <QtCore/QDebug>
 
 /**
 */

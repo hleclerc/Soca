@@ -1,7 +1,10 @@
 #ifndef BINOUT_H
 #define BINOUT_H
 
-#include <QByteArray>
+#ifdef METIL_COMP_DIRECTIVE
+#pragma inc_path /usr/include/qt4
+#endif // METIL_COMP_DIRECTIVE
+#include <QtCore/QByteArray>
 
 /**
 */

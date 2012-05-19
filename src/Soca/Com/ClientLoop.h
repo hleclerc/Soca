@@ -3,8 +3,9 @@
 
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QTcpSocket>
-#include <QString>
-#include <QMap>
+#include <QtCore/QEventLoop>
+#include <QtCore/QString>
+#include <QtCore/QMap>
 
 #include "../Database/Database.h"
 #include "../Model/Model.h"
@@ -15,14 +16,18 @@
 class ClientLoop : public QObject {
     Q_OBJECT
 public:
-    ClientLoop( const QHostAddress &address, quint16 port );
+    ClientLoop( Database *db, const QHostAddress &address, quint16 port );
 
     /// ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
     void load( QString addr, QObject *receiver, const char *member );
 
+    /// load a model, waiting for the answer if not already present in memory
+    Model *load_async( QString addr );
+
 private slots:
     void readyRead();
     void send_data();
+    void model_slot( Model *m );
 
 signals:
     void _load( Model *m ); ///< dummy signal
@@ -36,6 +41,7 @@ private:
     // parse
     void rep_update_PI32( qint64 m, qint32 info ); ///<
     void rep_update_PI64( qint64 m, qint64 info ); ///<
+    void rep_update_6432( qint64 m, qint64 man, qint32 exp ); ///<
     void rep_update_cstr( qint64 m, const char *type_str, int type_len ); ///<
     void rep_push_string( const char *str, int len ); ///<
     void rep_push_model( qint64 m ); ///<
@@ -52,15 +58,17 @@ private:
     void out_sig(); ///< signal that there is something to send
 
     //
-    Database db;
+    Database *db;
 
     BinOut out; ///< tmp buffer (to be sent to tcpSocket)
     QTcpSocket *tcpSocket;
-    QMap<qint64,Model *> model_map;
     QMap<int,LoadCallback> load_callbacks;
 
     QVector<Model *> model_stack;
     QVector<QString> string_stack;
+
+    Model *model_rep;
+    class QEventLoop *qevent_loop;
 
     bool out_signaled;
 };

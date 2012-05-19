@@ -1,7 +1,6 @@
 #ifndef VAL_H
 #define VAL_H
 
-#include <QtGlobal>
 #include "Model.h"
 
 /**

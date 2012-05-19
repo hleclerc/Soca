@@ -1,6 +1,6 @@
 #include "ModelWithAttr.h"
-#include <QVector>
-#include <QDebug>
+#include <QtCore/QVector>
+#include <QtCore/QDebug>
 
 ModelWithAttr::ModelWithAttr() {
 }

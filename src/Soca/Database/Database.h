@@ -2,7 +2,7 @@
 #define DATABASE_H
 
 #include "../Model/Model.h"
-#include <QMap>
+#include <QtCore/QMap>
 
 /**
 */

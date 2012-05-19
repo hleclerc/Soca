@@ -1,5 +1,7 @@
 #include "Database.h"
 
+#pragma lib_name QtCore
+
 Database::Database() {
 }
 

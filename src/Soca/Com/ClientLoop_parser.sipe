@@ -4,6 +4,7 @@ rep_change      = 'C' uint64_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data-
 rep_update_PI32 = 'U' uint64_bin_le[ model_id ] uint32_bin_le[ len ] { rep_update_PI32( sipe_data->model_id, sipe_data->len ); }
 rep_update_PI64 = 'V' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_update_PI64( sipe_data->model_id, sipe_data->ptr ); }
 rep_update_cstr = 'W' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_update_cstr( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
+rep_update_6432 = 'X' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] uint32_bin_le[ len ] { rep_update_6432( sipe_data->model_id, sipe_data->ptr, sipe_data->len ); }
 rep_push_string = 'p' str_32[ len, str ] { rep_push_string( sipe_data->str, sipe_data->len ); }
 rep_push_model  = 'P' uint64_bin_le[ model_id ] { rep_push_model( sipe_data->model_id ); }
 rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
@@ -14,6 +15,7 @@ main = (
     rep_update_PI32 |
     rep_update_PI64 |
     rep_update_cstr |
+    rep_update_6432 |
     rep_push_string |
     rep_push_model |
     rep_creation |

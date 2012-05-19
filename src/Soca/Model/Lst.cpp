@@ -1,4 +1,4 @@
-#include <QDebug>
+#include <QtCore/QDebug>
 #include "Lst.h"
 
 Lst::Lst() {

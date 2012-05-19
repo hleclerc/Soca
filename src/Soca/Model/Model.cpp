@@ -12,7 +12,7 @@ bool Model::_set( const char *str, int len ) {
     return false;
 }
 
-bool Model::_set( qint64 a, qint32 b ) {
+bool Model::_set( qint64, qint32 ) {
     return false;
 }
 

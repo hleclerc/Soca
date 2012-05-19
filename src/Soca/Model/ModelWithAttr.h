@@ -2,7 +2,7 @@
 #define MODELWITHATTR_H
 
 #include "Model.h"
-#include <QPair>
+#include <QtCore/QPair>
 
 /**
 

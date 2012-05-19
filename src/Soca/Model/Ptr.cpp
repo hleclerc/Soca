@@ -10,6 +10,5 @@ void Ptr::write_str( QDebug dbg ) const {
 bool Ptr::_set( qint64 a ) {
     bool res = _data != a;
     _data = a;
-    qDebug() << "-> " << a << "\n";
     return res;
 }
