@@ -14,6 +14,7 @@
 ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port ) : db( db ) {
     tcpSocket = new QTcpSocket( this );
     connect( tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()) );
+    connect( tcpSocket, SIGNAL(aboutToClose()), this, SLOT(aboutToClose()) );
 
     tcpSocket->connectToHost( address, port );
     out_signaled = false;
@@ -181,6 +182,10 @@ void ClientLoop::readyRead() {
             break;
         parse( buffer, buffer + ruff );
     }
+}
+
+void ClientLoop::aboutToClose() {
+    qDebug() << "About ";
 }
 
 void ClientLoop::send_data() {

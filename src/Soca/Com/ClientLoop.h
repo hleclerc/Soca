@@ -35,6 +35,7 @@ public:
 
 private slots:
     void readyRead();
+    void aboutToClose();
     void send_data();
     void model_slot( Model *m );
 
