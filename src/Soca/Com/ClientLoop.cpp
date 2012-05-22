@@ -114,7 +114,6 @@ void ClientLoop::rep_push_string( const char *str, int len ) {
 }
 
 void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
-    qDebug() << __LINE__;
     if ( quint64_callbacks.contains( n_callback ) ) {
         Callback &lc = quint64_callbacks[ n_callback ];
 
@@ -129,7 +128,6 @@ void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
     qDebug() << __LINE__;
     QString s = QString::fromUtf8( type_str, type_len );
-    // qDebug() << s;
 
     Model *r = 0;
     if ( s == "Lst" ) r = new Lst;
@@ -175,13 +173,18 @@ void ClientLoop::wait() {
 }
 
 void ClientLoop::readyRead() {
-    QByteArray tmp = tcpSocket->readAll();
-    parse( tmp.data(), tmp.data() + tmp.size() );
+    while ( true ) {
+        char buffer[ 2048 ];
+        qint64 ruff = tcpSocket->read( buffer, 2048 );
+        qDebug() << "read" << ruff;
+        if ( not ruff )
+            break;
+        parse( buffer, buffer + ruff );
+    }
 }
 
 void ClientLoop::send_data() {
     out << 'E';
-    qDebug() << __LINE__;
 
     tcpSocket->write( out.data() );
     out_signaled = false;
