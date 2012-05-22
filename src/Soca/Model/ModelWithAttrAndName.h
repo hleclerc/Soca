@@ -8,6 +8,7 @@
 class ModelWithAttrAndName : public ModelWithAttr {
 public:
     ModelWithAttrAndName( QString _type );
+    virtual QString type() const;
 
     QString _type;
 };

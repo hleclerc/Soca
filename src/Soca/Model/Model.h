@@ -17,6 +17,7 @@ public:
     Model();
 
     virtual void write_str( QDebug dbg ) const = 0;
+    virtual QString type() const = 0;
 
     virtual bool _set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack );
     virtual bool _set( const char *str, int len );

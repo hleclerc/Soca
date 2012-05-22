@@ -11,6 +11,10 @@ void Lst::write_str( QDebug dbg ) const {
     dbg.nospace() << "]";
 }
 
+QString Lst::type() const {
+    return "Lst";
+}
+
 bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
     bool res = false;
 

@@ -10,6 +10,8 @@ public:
     Str();
 
     virtual void write_str( QDebug dbg ) const;
+    virtual QString type() const;
+
     virtual bool _set( const char *str, int len );
 
     QString _data;

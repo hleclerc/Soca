@@ -2,3 +2,7 @@
 
 Directory::Directory() {
 }
+
+QString Directory::type() const {
+    return "Directory";
+}

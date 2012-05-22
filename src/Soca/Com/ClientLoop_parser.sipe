@@ -26,3 +26,4 @@ main = (
     rep_load |
     rep_end
 )**
+{ qDebug() << "Bing " << *data; }

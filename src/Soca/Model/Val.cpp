@@ -10,6 +10,10 @@ void Val::write_str( QDebug dbg ) const {
         dbg.nospace() << man;
 }
 
+QString Val::type() const {
+    return "Val";
+}
+
 bool Val::_set( qint64 a, qint32 b ) {
     if ( a != man or b != exp ) {
         man = a;

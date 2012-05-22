@@ -10,6 +10,7 @@ public:
     Ptr();
 
     virtual void write_str( QDebug dbg ) const;
+    virtual QString type() const;
     virtual bool _set( qint64 a );
 
     qint64 _data;

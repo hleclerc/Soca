@@ -10,6 +10,8 @@ public:
     Path();
 
     virtual void write_str( QDebug dbg ) const;
+    virtual QString type() const;
+
     // data is stored internally by the server
 };
 
