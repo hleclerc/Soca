@@ -37,5 +37,6 @@ QT += network
 
 OTHER_FILES += \
     src/Soca/Com/ClientLoop_parser.sipe \
-    update_parser.sh
+    update_parser.sh \
+    Makefile.txt
 

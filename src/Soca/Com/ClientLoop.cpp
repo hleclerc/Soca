@@ -20,9 +20,9 @@ ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port 
 }
 
 void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
-    int n = n_callback();
+    int n = n_callback_model();
 
-    LoadCallback &lc = load_callbacks[ n ];
+    Callback &lc = model_callbacks[ n ];
     lc.receiver = receiver;
     lc.member = member;
 
@@ -38,6 +38,17 @@ Model *ClientLoop::load_async( QString addr ) {
     QEventLoop qe; qevent_loop = &qe;
     qevent_loop->exec();
     return model_rep;
+}
+
+void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const char *member ) {
+    int n = n_callback_quint64();
+
+    Callback &lc = _callbacks[ n ];
+    lc.receiver = receiver;
+    lc.member = member;
+
+    out << 'R' << n << type;
+    out_sig();
 }
 
 void ClientLoop::model_slot( Model *m ) {
@@ -78,6 +89,18 @@ void ClientLoop::rep_push_string( const char *str, int len ) {
     string_stack << QString::fromUtf8( str, len );
 }
 
+void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
+    if ( quint64_callbacks.contains( n_callback ) ) {
+        Callback &lc = quint64_callbacks[ n_callback ];
+
+        connect( this, SIGNAL(_type(quint64)), lc.receiver, lc.member );
+        emit _type( m );
+        disconnect( this, SIGNAL(_type(quint64)), lc.receiver, lc.member );
+
+        quint64_callbacks.remove( n_callback );
+    }
+}
+
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
     QString s = QString::fromUtf8( type_str, type_len );
     // qDebug() << s;
@@ -96,15 +119,14 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
 }
 
 void ClientLoop::rep_load( qint64 m, int n_callback ) {
-    if ( load_callbacks.contains( n_callback ) ) {
-        LoadCallback &lc = load_callbacks[ n_callback ];
+    if ( model_callbacks.contains( n_callback ) ) {
+        Callback &lc = model_callbacks[ n_callback ];
 
         connect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
         emit _load( db->model( m ) );
         disconnect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
 
-
-        load_callbacks.remove( n_callback );
+        model_callbacks.remove( n_callback );
     }
 }
 
@@ -132,10 +154,18 @@ void ClientLoop::send_data() {
     out.clear();
 }
 
-int ClientLoop::n_callback() const {
+int ClientLoop::n_callback_model() const {
     while ( true ) {
         int res = qrand();
-        if ( not load_callbacks.contains( res ) )
+        if ( not model_callbacks.contains( res ) )
+            return res;
+    }
+}
+
+int ClientLoop::n_callback_quint64() const {
+    while ( true ) {
+        int res = qrand();
+        if ( not quint64_callbacks.contains( res ) )
             return res;
     }
 }
