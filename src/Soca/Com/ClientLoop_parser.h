@@ -57,7 +57,7 @@ l_1: if ( *data != 'U' ) goto l_0;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x6ffc90;
+         sipe_data->_inp_cont = &&cnt_mark_0xb7d3f0;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -65,7 +65,7 @@ l_1: if ( *data != 'U' ) goto l_0;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x6ffc90:
+cnt_mark_0xb7d3f0:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 12 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -114,7 +114,7 @@ l_0: if ( *data != 'V' ) goto l_2;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x6ebd60;
+         sipe_data->_inp_cont = &&cnt_mark_0xb6df80;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -122,7 +122,7 @@ l_0: if ( *data != 'V' ) goto l_2;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x6ebd60:
+cnt_mark_0xb6df80:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 40 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -174,7 +174,7 @@ l_2: if ( *data != 'W' ) goto l_4;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x7f01f0;
+         sipe_data->_inp_cont = &&cnt_mark_0xbb06f0;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -182,7 +182,7 @@ l_2: if ( *data != 'W' ) goto l_4;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x7f01f0:
+cnt_mark_0xbb06f0:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 67 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -208,18 +208,19 @@ cnt_mark_0x7f01f0:
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
      {
         sipe_data->str_rem = sipe_data->len;
-    jmp_rd_str:
+    jmp_rd_str66:
         if ( not sipe_data->str_rem )
-            goto end_rd_str;
-        if ( data >= end ) {
-            sipe_data->_inp_cont = &&cnt_rd_str;
+            goto end_rd_str66;
+        if ( ++data >= end ) {
+            sipe_data->_inp_cont = &&cnt_rd_str66;
             return 0;
         }
-    cnt_rd_str:
+    cnt_rd_str66:
+            std::cout << *data << std::endl;
             sipe_data->str += *data;
             --sipe_data->str_rem;
-            goto jmp_rd_str;
-    end_rd_str: ;
+            goto jmp_rd_str66;
+    end_rd_str66: ;
     }
      { rep_update_cstr( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
      goto l_3;
@@ -249,7 +250,7 @@ l_4: if ( *data != 'X' ) goto l_5;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x6dd7d0;
+         sipe_data->_inp_cont = &&cnt_mark_0xbada60;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -257,7 +258,7 @@ l_4: if ( *data != 'X' ) goto l_5;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x6dd7d0:
+cnt_mark_0xbada60:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 98 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -314,7 +315,7 @@ l_5: if ( *data != 'Y' ) goto l_6;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x6f8e70;
+         sipe_data->_inp_cont = &&cnt_mark_0xbaac00;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -322,7 +323,7 @@ l_5: if ( *data != 'Y' ) goto l_6;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x6f8e70:
+cnt_mark_0xbaac00:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 126 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -352,7 +353,7 @@ l_6: if ( *data != 'p' ) goto l_7;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x7fe490;
+         sipe_data->_inp_cont = &&cnt_mark_0xc86770;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -360,7 +361,7 @@ l_6: if ( *data != 'p' ) goto l_7;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x7fe490:
+cnt_mark_0xc86770:
      { sipe_data->len  = *reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 138 )
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -370,20 +371,21 @@ cnt_mark_0x7fe490:
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
      {
         sipe_data->str_rem = sipe_data->len;
-    jmp_rd_str:
+    jmp_rd_str127:
         if ( not sipe_data->str_rem )
-            goto end_rd_str;
-        if ( data >= end ) {
-            sipe_data->_inp_cont = &&cnt_rd_str;
+            goto end_rd_str127;
+        if ( ++data >= end ) {
+            sipe_data->_inp_cont = &&cnt_rd_str127;
             return 0;
         }
-    cnt_rd_str:
+    cnt_rd_str127:
+            std::cout << *data << std::endl;
             sipe_data->str += *data;
             --sipe_data->str_rem;
-            goto jmp_rd_str;
-    end_rd_str: ;
+            goto jmp_rd_str127;
+    end_rd_str127: ;
     }
-     { rep_push_string( sipe_data->str, sipe_data->len ); }
+     { rep_push_string( sipe_data->str.data(), sipe_data->len ); }
      goto l_3;
 l_7: if ( *data != 'P' ) goto l_8;
      INCR( 141 )
@@ -399,7 +401,7 @@ l_7: if ( *data != 'P' ) goto l_8;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x7f9640;
+         sipe_data->_inp_cont = &&cnt_mark_0xb8e300;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -407,7 +409,7 @@ l_7: if ( *data != 'P' ) goto l_8;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x7f9640:
+cnt_mark_0xb8e300:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 149 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -443,7 +445,7 @@ l_8: if ( *data != 'R' ) goto l_9;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x6e8830;
+         sipe_data->_inp_cont = &&cnt_mark_0xb688b0;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -451,7 +453,7 @@ l_8: if ( *data != 'R' ) goto l_9;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x6e8830:
+cnt_mark_0xb688b0:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 168 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -495,7 +497,7 @@ l_9: if ( *data != 'N' ) goto l_10;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x7fbc00;
+         sipe_data->_inp_cont = &&cnt_mark_0xc83f00;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -503,7 +505,7 @@ l_9: if ( *data != 'N' ) goto l_10;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x7fbc00:
+cnt_mark_0xc83f00:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 191 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }
@@ -529,20 +531,21 @@ cnt_mark_0x7fbc00:
      { sipe_data->len += *reinterpret_cast<const unsigned char *>( data ) << 24; }
      {
         sipe_data->str_rem = sipe_data->len;
-    jmp_rd_str:
+    jmp_rd_str184:
         if ( not sipe_data->str_rem )
-            goto end_rd_str;
-        if ( data >= end ) {
-            sipe_data->_inp_cont = &&cnt_rd_str;
+            goto end_rd_str184;
+        if ( ++data >= end ) {
+            sipe_data->_inp_cont = &&cnt_rd_str184;
             return 0;
         }
-    cnt_rd_str:
+    cnt_rd_str184:
+            std::cout << *data << std::endl;
             sipe_data->str += *data;
             --sipe_data->str_rem;
-            goto jmp_rd_str;
-    end_rd_str: ;
+            goto jmp_rd_str184;
+    end_rd_str184: ;
     }
-     { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
+     { rep_creation( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
      goto l_3;
 l_10:if ( *data != 'L' ) goto l_11;
      INCR( 202 )
@@ -562,7 +565,7 @@ l_10:if ( *data != 'L' ) goto l_11;
      if ( sipe_data->_mark[ 0 ] ) {
          data = sipe_data->_mark[ 0 ];
      } else {
-         sipe_data->_inp_cont = &&cnt_mark_0x716e10;
+         sipe_data->_inp_cont = &&cnt_mark_0xb9cba0;
          SIPE_CHARP beg = (SIPE_CHARP)sipe_data->_mark_data[ 0 ].data();
          int res = parse( sipe_data, beg, beg + sipe_data->_mark_data[ 0 ].size() );
          if ( res )
@@ -570,7 +573,7 @@ l_10:if ( *data != 'L' ) goto l_11;
          data = beg_data;
          goto *sipe_data->_inp_cont;
      }
-cnt_mark_0x716e10:
+cnt_mark_0xb9cba0:
      { sipe_data->model_id  = (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  0; }
      INCR( 214 )
      { sipe_data->model_id += (quint64)*reinterpret_cast<const unsigned char *>( data ) <<  8; }

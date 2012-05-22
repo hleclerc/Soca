@@ -6,10 +6,10 @@ rep_update_PI64 = 'V' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_updat
 rep_update_cstr = 'W' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_update_cstr( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
 rep_update_6432 = 'X' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] uint32_bin_le[ len ] { rep_update_6432( sipe_data->model_id, sipe_data->ptr, sipe_data->len ); }
 rep_update_PI8  = 'Y' uint64_bin_le[ model_id ] uint8_bin_le[ pi8 ] { rep_update_PI8( sipe_data->model_id, sipe_data->pi8 ); }
-rep_push_string = 'p' str_32[ len, str ] { rep_push_string( sipe_data->str, sipe_data->len ); }
+rep_push_string = 'p' str_32[ len, str ] { rep_push_string( sipe_data->str.data(), sipe_data->len ); }
 rep_push_model  = 'P' uint64_bin_le[ model_id ] { rep_push_model( sipe_data->model_id ); }
 rep_reg_type    = 'R' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_reg_type( sipe_data->model_id, sipe_data->callback ); }
-rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str, sipe_data->len ); }
+rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
 rep_load        = 'L' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_load( sipe_data->model_id, sipe_data->callback ); }
 rep_end         = 'E' { rep_end(); }
 
