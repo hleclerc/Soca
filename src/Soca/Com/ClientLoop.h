@@ -42,6 +42,7 @@ private:
     void rep_update_PI32( qint64 m, qint32 info ); ///<
     void rep_update_PI64( qint64 m, qint64 info ); ///<
     void rep_update_6432( qint64 m, qint64 man, qint32 exp ); ///<
+    void rep_update_PI8 ( qint64 m, quint8 pi8 ); ///<
     void rep_update_cstr( qint64 m, const char *type_str, int type_len ); ///<
     void rep_push_string( const char *str, int len ); ///<
     void rep_push_model( qint64 m ); ///<

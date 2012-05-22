@@ -55,6 +55,11 @@ void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
         p->_set( man, exp );
 }
 
+void ClientLoop::rep_update_6432( qint64 m, quint8 pi8 ) {
+    if ( Model *p = db->model( m ) )
+        p->_set( pi8 );
+}
+
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
     if ( Model *p = db->model( m ) )
         p->_set( info, model_stack, string_stack );

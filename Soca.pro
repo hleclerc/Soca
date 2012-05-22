@@ -11,7 +11,8 @@ SOURCES += \
     src/Soca/Model/Str.cpp \
     src/Soca/Model/Path.cpp \
     src/Soca/Model/Ptr.cpp \
-    src/Soca/Model/ModelWithAttrAndName.cpp
+    src/Soca/Model/ModelWithAttrAndName.cpp \
+    src/Soca/Model/Bool.cpp
 
 HEADERS += \
     src/Soca/Com/ClientLoop.h \
@@ -26,7 +27,8 @@ HEADERS += \
     src/Soca/Model/Str.h \
     src/Soca/Model/Path.h \
     src/Soca/Model/Ptr.h \
-    src/Soca/Model/ModelWithAttrAndName.h
+    src/Soca/Model/ModelWithAttrAndName.h \
+    src/Soca/Model/Bool.h
 
 INCLUDEPATH += \
     src
