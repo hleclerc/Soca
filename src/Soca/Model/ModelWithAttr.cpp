@@ -27,6 +27,7 @@ void ModelWithAttr::write_str( QDebug dbg ) const {
 }
 
 bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QString> &string_stack ) {
+    qDebug() << string_stack.size() << model_stack.size();
     int os = string_stack.size() - size;
     int om = model_stack.size() - size;
     bool res = size != _data.size();

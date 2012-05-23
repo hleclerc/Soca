@@ -13,8 +13,9 @@
 
 ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port ) : db( db ) {
     tcpSocket = new QTcpSocket( this );
-    connect( tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()) );
-    connect( tcpSocket, SIGNAL(aboutToClose()), this, SLOT(aboutToClose()) );
+    connect( tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::QueuedConnection );
+    connect( tcpSocket, SIGNAL(aboutToClose()), this, SLOT(aboutToClose()), Qt::QueuedConnection );
+    connect( tcpSocket, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()), Qt::QueuedConnection );
 
     tcpSocket->connectToHost( address, port );
     out_signaled = false;
@@ -87,7 +88,7 @@ void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
 }
 
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
-    qDebug() << __LINE__;
+    qDebug() << __LINE__ << info;
     if ( Model *p = db->model( m ) )
         p->_set( info, model_stack, string_stack );
 }
@@ -144,8 +145,7 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
 }
 
 void ClientLoop::rep_load( qint64 m, int n_callback ) {
-    qDebug() << __LINE__;
-    qDebug() << "rep" << n_callback;
+    qDebug() << __LINE__ << "rep" << n_callback;
     if ( model_callbacks.contains( n_callback ) ) {
         Callback &lc = model_callbacks[ n_callback ];
 
@@ -177,7 +177,6 @@ void ClientLoop::readyRead() {
     while ( true ) {
         char buffer[ 2048 ];
         qint64 ruff = tcpSocket->read( buffer, 2048 );
-        qDebug() << "read" << ruff;
         if ( not ruff )
             break;
         parse( buffer, buffer + ruff );
@@ -186,6 +185,10 @@ void ClientLoop::readyRead() {
 
 void ClientLoop::aboutToClose() {
     qDebug() << "About ";
+}
+
+void ClientLoop::readChannelFinished() {
+    qDebug() << "readChannelFinished";
 }
 
 void ClientLoop::send_data() {
