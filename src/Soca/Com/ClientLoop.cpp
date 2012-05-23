@@ -69,49 +69,41 @@ void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const c
 }
 
 void ClientLoop::model_slot( Model *m ) {
-    qDebug() << __LINE__;
-
     model_rep = m;
     qevent_loop->exit();
 }
 
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( info );
 }
 
 void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( man, exp );
 }
 
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
-    qDebug() << __LINE__ << info;
     if ( Model *p = db->model( m ) )
         p->_set( info, model_stack, string_stack );
 }
 
 void ClientLoop::rep_update_PI8( qint64 m, quint8 info ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( info );
 }
 
 void ClientLoop::rep_update_cstr( qint64 m, const char *type_str, int type_len ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( type_str, type_len );
 }
 
 void ClientLoop::rep_push_model( qint64 m ) {
-    qDebug() << __LINE__;
     model_stack << db->model( m );
 }
 
 void ClientLoop::rep_push_string( const char *str, int len ) {
-    qDebug() << __LINE__;
+    qDebug() << "push " << QString::fromUtf8( str, len );
     string_stack << QString::fromUtf8( str, len );
 }
 
@@ -128,7 +120,6 @@ void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
 }
 
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
-    qDebug() << __LINE__;
     QString s = QString::fromUtf8( type_str, type_len );
 
     Model *r = 0;

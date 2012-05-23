@@ -27,7 +27,6 @@ void ModelWithAttr::write_str( QDebug dbg ) const {
 }
 
 bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QString> &string_stack ) {
-    qDebug() << string_stack.size() << model_stack.size();
     int os = string_stack.size() - size;
     int om = model_stack.size() - size;
     bool res = size != _data.size();
@@ -36,17 +35,19 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
     QVector<bool> used( _data.size(), 0 );
     for( int i = 0; i < size; ++i ) {
         QString key = string_stack[ os + i ];
+        qDebug() << key;
         int j = attr_index( key );
         if ( j >= 0 ) {
             res |= _data[ j ].val != model_stack[ os + i ];
             _data[ j ].val = model_stack[ os + i ];
-            used[ j ] = 1;
+            used[ j ] = true;
         } else {
             res = true;
             Attr attr;
             attr.key = key;
             attr.val = model_stack[ os + i ];
             _data << attr;
+            used << true;
         }
     }
 
