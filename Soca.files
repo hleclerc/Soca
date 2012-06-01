@@ -29,3 +29,5 @@ tests/MyApp.cpp
 tests/MyApp.h
 tests/test_loop.cpp
 Makefile
+src/Soca/Com/SodaClient.h
+src/Soca/Com/SodaClient.cpp

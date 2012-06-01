@@ -35,7 +35,6 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
     QVector<bool> used( _data.size(), 0 );
     for( int i = 0; i < size; ++i ) {
         QString key = string_stack[ os + i ];
-        qDebug() << key;
         int j = attr_index( key );
         if ( j >= 0 ) {
             res |= _data[ j ].val != model_stack[ os + i ];

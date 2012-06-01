@@ -23,5 +23,7 @@ bool Model::_set( qint64 a ) {
 QDebug operator<<( QDebug dbg, const Model *c ) {
     if ( c )
         c->write_str( dbg );
+    else
+        dbg << "(NULL)";
     return dbg.space();
 }

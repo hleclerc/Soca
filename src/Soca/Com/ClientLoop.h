@@ -24,8 +24,8 @@ public:
 
     ClientLoop( Database *db, const QHostAddress &address, quint16 port );
 
-    void load( QString addr, QObject *receiver, const char *member ); ///< ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
-    void load_ptr( quint64 ptr, QObject *receiver, const char *member ); ///<
+    int load( QString addr, QObject *receiver, const char *member ); ///< ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
+    int load_ptr( quint64 ptr, QObject *receiver, const char *member ); ///<
 
     Model *load_async( QString addr ); ///< load a model, waiting for the answer if not already present in memory
     Model *load_ptr_async( quint64 ptr ); ///<
@@ -39,10 +39,9 @@ private slots:
     void readChannelFinished();
 
     void send_data();
-    void model_slot( Model *m );
 
 signals:
-    void _load( Model * ); ///< dummy signal
+    void _load( Model *, int n_callback ); ///< dummy signal
     void _type( quint64 ); ///< dummy signal
 
 private:
@@ -72,7 +71,6 @@ private:
     int n_callback_model() const; ///< find a new callback id
     int n_callback_quint64() const; ///< find a new callback id
     void out_sig(); ///< signal that there is something to send
-    void wait();
 
     //
     Database *db;
@@ -84,9 +82,6 @@ private:
 
     QVector<Model *> model_stack;
     QVector<QString> string_stack;
-
-    Model *model_rep;
-    class QEventLoop *qevent_loop;
 
     bool out_signaled;
 };
