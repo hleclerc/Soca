@@ -1,5 +1,6 @@
 #include "../Model/ModelWithAttrAndName.h"
 #include "../Model/Directory.h"
+#include "../Model/Bool.h"
 #include "../Model/Path.h"
 #include "../Model/Str.h"
 #include "../Model/Ptr.h"
@@ -13,14 +14,15 @@
 
 ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port ) : db( db ) {
     tcpSocket = new QTcpSocket( this );
-    connect( tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()) );
-    connect( tcpSocket, SIGNAL(aboutToClose()), this, SLOT(aboutToClose()) );
+    connect( tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::QueuedConnection );
+    connect( tcpSocket, SIGNAL(aboutToClose()), this, SLOT(aboutToClose()), Qt::QueuedConnection );
+    connect( tcpSocket, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()), Qt::QueuedConnection );
 
     tcpSocket->connectToHost( address, port );
     out_signaled = false;
 }
 
-void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
+int ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
     int n = n_callback_model();
 
     Callback &lc = model_callbacks[ n ];
@@ -29,9 +31,11 @@ void ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
 
     out << 'L' << n << addr;
     out_sig();
+
+    return n;
 }
 
-void ClientLoop::load_ptr( quint64 ptr, QObject *receiver, const char *member ) {
+int ClientLoop::load_ptr( quint64 ptr, QObject *receiver, const char *member ) {
     int n = n_callback_model();
 
     Callback &lc = model_callbacks[ n ];
@@ -40,20 +44,8 @@ void ClientLoop::load_ptr( quint64 ptr, QObject *receiver, const char *member ) 
 
     out << 'l' << n << ptr;
     out_sig();
-}
 
-Model *ClientLoop::load_async( QString addr ) {
-    model_rep = 0;
-    load( addr, this, SLOT(model_slot(Model*)) );
-    wait();
-    return model_rep;
-}
-
-Model *ClientLoop::load_ptr_async( quint64 ptr ) {
-    model_rep = 0;
-    load_ptr( ptr, this, SLOT(model_slot(Model*)) );
-    wait();
-    return model_rep;
+    return n;
 }
 
 void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const char *member ) {
@@ -67,50 +59,36 @@ void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const c
     out_sig();
 }
 
-void ClientLoop::model_slot( Model *m ) {
-    qDebug() << __LINE__;
-
-    model_rep = m;
-    qevent_loop->exit();
-}
-
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( info );
 }
 
 void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( man, exp );
 }
 
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( info, model_stack, string_stack );
 }
 
 void ClientLoop::rep_update_PI8( qint64 m, quint8 info ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( info );
 }
 
 void ClientLoop::rep_update_cstr( qint64 m, const char *type_str, int type_len ) {
-    qDebug() << __LINE__;
     if ( Model *p = db->model( m ) )
         p->_set( type_str, type_len );
 }
 
 void ClientLoop::rep_push_model( qint64 m ) {
-    qDebug() << __LINE__;
     model_stack << db->model( m );
 }
 
 void ClientLoop::rep_push_string( const char *str, int len ) {
-    qDebug() << __LINE__;
     string_stack << QString::fromUtf8( str, len );
 }
 
@@ -127,12 +105,12 @@ void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
 }
 
 void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
-    qDebug() << __LINE__;
     QString s = QString::fromUtf8( type_str, type_len );
 
     Model *r = 0;
     if ( s == "Lst" ) r = new Lst;
     else if ( s == "Directory" ) r = new Directory;
+    else if ( s == "Bool" ) r = new Bool;
     else if ( s == "Path" ) r = new Path;
     else if ( s == "Ptr" ) r = new Ptr;
     else if ( s == "Str" ) r = new Str;
@@ -144,14 +122,12 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
 }
 
 void ClientLoop::rep_load( qint64 m, int n_callback ) {
-    qDebug() << __LINE__;
-    qDebug() << "rep" << n_callback;
     if ( model_callbacks.contains( n_callback ) ) {
         Callback &lc = model_callbacks[ n_callback ];
 
-        connect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
-        emit _load( db->model( m ) );
-        disconnect( this, SIGNAL(_load(Model *)), lc.receiver, lc.member );
+        connect( this, SIGNAL(_load(Model *,int)), lc.receiver, lc.member );
+        emit _load( db->model( m ), n_callback );
+        disconnect( this, SIGNAL(_load(Model *,int)), lc.receiver, lc.member );
 
         model_callbacks.remove( n_callback );
     }
@@ -167,17 +143,10 @@ void ClientLoop::out_sig() {
     }
 }
 
-void ClientLoop::wait() {
-    QEventLoop qe;
-    qevent_loop = &qe;
-    qevent_loop->exec();
-}
-
 void ClientLoop::readyRead() {
     while ( true ) {
         char buffer[ 2048 ];
         qint64 ruff = tcpSocket->read( buffer, 2048 );
-        qDebug() << "read" << ruff;
         if ( not ruff )
             break;
         parse( buffer, buffer + ruff );
@@ -185,7 +154,11 @@ void ClientLoop::readyRead() {
 }
 
 void ClientLoop::aboutToClose() {
-    qDebug() << "About ";
+    qDebug() << "About To close";
+}
+
+void ClientLoop::readChannelFinished() {
+    qDebug() << "readChannelFinished";
 }
 
 void ClientLoop::send_data() {

@@ -39,13 +39,14 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
         if ( j >= 0 ) {
             res |= _data[ j ].val != model_stack[ os + i ];
             _data[ j ].val = model_stack[ os + i ];
-            used[ j ] = 1;
+            used[ j ] = true;
         } else {
             res = true;
             Attr attr;
             attr.key = key;
             attr.val = model_stack[ os + i ];
             _data << attr;
+            used << true;
         }
     }
 
