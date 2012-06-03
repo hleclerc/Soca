@@ -4,6 +4,17 @@ Model::Model() {
     _server_id = 0;
 }
 
+void Model::add_attr( QString key, Model *m ) {
+}
+
+int Model::attr_index( QString key ) const {
+    return -1;
+}
+
+Model *Model::attr( QString key ) const {
+    return 0;
+}
+
 bool Model::_set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack ) {
     return false;
 }

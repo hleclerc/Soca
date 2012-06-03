@@ -12,8 +12,13 @@ SodaClient::SodaClient( const QHostAddress &address, quint16 port ) {
         qcore_application = new QCoreApplication( argc, argv );
     }
 
+    qevent_loop = 0;
     database = new Database;
     client_loop = new ClientLoop( database, address, port );
+    //if ( not client_loop->is_valid() )
+    //    disconnected();
+
+    connect( client_loop, SIGNAL(disconnected()), this, SLOT(disconnected()), Qt::QueuedConnection );
 }
 
 SodaClient::~SodaClient() {
@@ -29,22 +34,12 @@ void SodaClient::reg_type( QString type ) {
     client_loop->reg_type_for_callback( type, this, SLOT(reg_type_callback(quint64)) );
 }
 
-Model *SodaClient::load_ptr( quint64 ptr ) {
-    int n = client_loop->load_ptr( ptr, this, SLOT(load_callback(Model*,int)) );
-    while ( true ) {
-        wait();
-        for( int i = pending_events.size() - 1; i >= 0; --i ) {
-            if ( pending_events[ i ].event_type == Event::Load and pending_events[ i ].n_callback == n ) {
-                Model *res = pending_events[ i ].model;
-                pending_events.remove( i );
-                return res;
-            }
-        }
-    }
+MP SodaClient::load_ptr( quint64 ptr ) {
+    return _wait_load( client_loop->load_ptr( ptr, this, SLOT(load_callback(Model*,int)) ) );
 }
 
-Model *SodaClient::load( QString path ) {
-    return 0;
+MP SodaClient::load( QString path ) {
+    return _wait_load( client_loop->load( path, this, SLOT(load_callback(Model*,int)) ) );
 }
 
 SodaClient::Event SodaClient::event() {
@@ -54,14 +49,31 @@ SodaClient::Event SodaClient::event() {
             pending_events.pop_front();
             return res;
         }
-        wait();
+        _wait();
     }
 }
 
-void SodaClient::wait() {
+bool SodaClient::connected() const {
+    return client_loop->connected();
+}
+
+void SodaClient::_wait() {
     QEventLoop qe;
     qevent_loop = &qe;
     qevent_loop->exec();
+}
+
+MP SodaClient::_wait_load( int n ) {
+    while ( true ) {
+        _wait();
+        for( int i = pending_events.size() - 1; i >= 0; --i ) {
+            if ( pending_events[ i ].event_type == Event::Load and pending_events[ i ].n_callback == n ) {
+                Model *res = pending_events[ i ].model;
+                pending_events.remove( i );
+                return MP( client_loop, res );
+            }
+        }
+    }
 }
 
 void SodaClient::reg_type_callback( quint64 ptr ) {
@@ -83,3 +95,13 @@ void SodaClient::load_callback( Model *m, int n ) {
 
     qevent_loop->exit();
 }
+
+void SodaClient::disconnected() {
+    Event event;
+    event.event_type = Event::Disconnection;
+    pending_events << event;
+
+    if ( qevent_loop )
+        qevent_loop->exit();
+}
+

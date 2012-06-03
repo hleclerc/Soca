@@ -27,11 +27,14 @@ public:
     int load( QString addr, QObject *receiver, const char *member ); ///< ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
     int load_ptr( quint64 ptr, QObject *receiver, const char *member ); ///<
 
+    bool connected() const;
+
     Model *load_async( QString addr ); ///< load a model, waiting for the answer if not already present in memory
     Model *load_ptr_async( quint64 ptr ); ///<
 
     ///
     void reg_type_for_callback( QString type, QObject *receiver, const char *member );
+
 
 private slots:
     void readyRead();
@@ -41,6 +44,7 @@ private slots:
     void send_data();
 
 signals:
+    void disconnected();
     void _load( Model *, int n_callback ); ///< dummy signal
     void _type( quint64 ); ///< dummy signal
 

@@ -19,6 +19,7 @@ ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port 
     connect( tcpSocket, SIGNAL(readChannelFinished()), this, SLOT(readChannelFinished()), Qt::QueuedConnection );
 
     tcpSocket->connectToHost( address, port );
+    tcpSocket->waitForConnected( 1000 );
     out_signaled = false;
 }
 
@@ -46,6 +47,10 @@ int ClientLoop::load_ptr( quint64 ptr, QObject *receiver, const char *member ) {
     out_sig();
 
     return n;
+}
+
+bool ClientLoop::connected() const {
+    return tcpSocket->state() == tcpSocket->ConnectedState;
 }
 
 void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const char *member ) {
@@ -159,6 +164,7 @@ void ClientLoop::aboutToClose() {
 
 void ClientLoop::readChannelFinished() {
     qDebug() << "readChannelFinished";
+    emit disconnected();
 }
 
 void ClientLoop::send_data() {

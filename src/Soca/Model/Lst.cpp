@@ -11,6 +11,17 @@ void Lst::write_str( QDebug dbg ) const {
     dbg.nospace() << "]";
 }
 
+int Lst::attr_index( QString key ) const {
+    bool ok;
+    int res = key.toInt( &ok );
+    return ok ? res : -1;
+}
+
+Model *Lst::attr( QString key ) const {
+    int index = attr_index( key );
+    return index >= 0 and index < _data.size() ? _data[ index ] : 0;
+}
+
 QString Lst::type() const {
     return "Lst";
 }

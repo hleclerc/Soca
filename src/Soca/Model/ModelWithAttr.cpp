@@ -5,6 +5,19 @@
 ModelWithAttr::ModelWithAttr() {
 }
 
+void ModelWithAttr::add_attr( QString key, Model *m ) {
+    for( int i = 0; i < _data.size(); ++i ) {
+        if ( _data[ i ].key == key ) {
+            _data[ i ].val = m;
+            return;
+        }
+    }
+    Attr attr;
+    attr.key = key;
+    attr.val = m
+    _data << attr;
+}
+
 Model *ModelWithAttr::attr( QString key ) const {
     for( int i = 0; i < _data.size(); ++i )
         if ( _data[ i ].key == key )
