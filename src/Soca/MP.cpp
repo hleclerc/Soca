@@ -17,7 +17,6 @@ MP MP::operator[]( QString path ) {
                 n.replace( ']', ' ' );
                 n = n.trimmed();
             }
-            qDebug() << n << n.replace( ']', ' ' );
             res = res->attr( n );
         }
     }
@@ -31,9 +30,9 @@ MP MP::operator=( qint64 val ) {
         o->add_attr( p, m );
         return *this;
     }
-    if ( m )
-
-    return this;
+    if ( m and m->_set( val ) )
+        c->signal_change( m );
+    return *this;
 }
 
 QDebug operator<<( QDebug dbg, const MP &c ) {

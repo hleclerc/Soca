@@ -1,3 +1,4 @@
+#include "../Database/Database.h"
 #include "Model.h"
 
 Model::Model() {
@@ -13,6 +14,12 @@ int Model::attr_index( QString key ) const {
 
 Model *Model::attr( QString key ) const {
     return 0;
+}
+
+quint64 Model::get_server_id( Database *db ) const {
+    if ( not _server_id )
+        _server_id = db->new_tmp_server_id();
+    return _server_id;
 }
 
 bool Model::_set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack ) {

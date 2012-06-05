@@ -21,6 +21,12 @@ ClientLoop::ClientLoop( Database *db, const QHostAddress &address, quint16 port 
     tcpSocket->connectToHost( address, port );
     tcpSocket->waitForConnected( 1000 );
     out_signaled = false;
+
+    db->clients.insert( this );
+}
+
+ClientLoop::~ClientLoop() {
+    db->clients.remove( this );
 }
 
 int ClientLoop::load( QString addr, QObject *receiver, const char *member ) {
@@ -53,6 +59,12 @@ bool ClientLoop::connected() const {
     return tcpSocket->state() == tcpSocket->ConnectedState;
 }
 
+void ClientLoop::operator<<( const BinOut &data ) {
+    out << data;
+    qDebug() << "..." << out.size() << data.size();
+    out_sig();
+}
+
 void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const char *member ) {
     int n = n_callback_quint64();
 
@@ -63,6 +75,7 @@ void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const c
     out << 'R' << n << type;
     out_sig();
 }
+
 
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
     if ( Model *p = db->model( m ) )
@@ -168,6 +181,7 @@ void ClientLoop::readChannelFinished() {
 }
 
 void ClientLoop::send_data() {
+    qDebug() << "sending" << out.size();
     out << 'E';
 
     tcpSocket->write( out.data() );

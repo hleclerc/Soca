@@ -14,7 +14,7 @@ void ModelWithAttr::add_attr( QString key, Model *m ) {
     }
     Attr attr;
     attr.key = key;
-    attr.val = m
+    attr.val = m;
     _data << attr;
 }
 
