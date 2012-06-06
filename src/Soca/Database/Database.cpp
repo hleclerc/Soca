@@ -7,13 +7,33 @@
 #pragma lib_name QtCore
 
 Database::Database() {
+    cur_date = 0;
     reg_changes = true;
     end_round_timer = false;
     prev_tmp_server_id = 0;
 }
 
+void Database::_call_onchange_rec( Model *m ) {
+    if ( m->_date_last_change < cur_date ) {
+        _call_onchange_loc( m, 0 );
+        foreach( Model *p, m->parents )
+            _call_onchange_rec( p );
+    }
+}
+
+void Database::_call_onchange_loc( Model *m, int add ) {
+    m->_date_last_change = cur_date + add;
+
+    foreach( Model::Callback lc, m->_onchange_list ) {
+        connect( this, SIGNAL(_model_sig(Model*)), lc.receiver, lc.member );
+        emit _model_sig( m );
+        disconnect( this, SIGNAL(_model_sig(Model*)), lc.receiver, lc.member );
+    }
+}
+
 void Database::end_round() {
     end_round_timer = false;
+    cur_date += 2;
 
     BinOut nut, uut;
     foreach( Model *m, changed_models ) {
@@ -22,11 +42,9 @@ void Database::end_round() {
             m->write_usr( nut, uut, this );
 
         // registered callback(s) ?
-        foreach( Model::Callback lc, m->_onchange_list ) {
-            connect( this, SIGNAL(_model_sig(Model*)), lc.receiver, lc.member );
-            emit _model_sig( m );
-            disconnect( this, SIGNAL(_model_sig(Model*)), lc.receiver, lc.member );
-        }
+        _call_onchange_loc( m, 1 );
+        foreach( Model *p, m->parents )
+            _call_onchange_rec( p );
     }
 
     // send data
@@ -47,13 +65,13 @@ Model *Database::model( qint64 m ) const {
 }
 
 Model *Database::signal_change( Model *m, bool from_ext ) {
+    m->_date_last_change = cur_date + 3;
     m->_changed_from_ext = from_ext;
-    if ( m->_server_id and reg_changes ) {
-        changed_models.insert( m );
-        if ( not end_round_timer ) {
-            end_round_timer = true;
-            QTimer::singleShot( 0, this, SLOT(end_round()) );
-        }
+    changed_models.insert( m );
+
+    if ( not end_round_timer ) {
+        end_round_timer = true;
+        QTimer::singleShot( 0, this, SLOT(end_round()) );
     }
 }
 

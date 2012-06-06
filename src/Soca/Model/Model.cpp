@@ -45,6 +45,16 @@ bool Model::_set( qint64 a ) {
     return false;
 }
 
+void Model::add_parent( Model *p ) {
+    parents << p;
+}
+
+void Model::rem_parent( Model *p ) {
+    int i = parents.indexOf( p );
+    if ( i >= 0 )
+        parents.remove( i );
+}
+
 QDebug operator<<( QDebug dbg, const Model *c ) {
     if ( c )
         c->write_str( dbg );
@@ -52,3 +62,4 @@ QDebug operator<<( QDebug dbg, const Model *c ) {
         dbg << "(NULL)";
     return dbg.space();
 }
+

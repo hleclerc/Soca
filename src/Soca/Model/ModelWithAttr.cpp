@@ -6,12 +6,15 @@ ModelWithAttr::ModelWithAttr() {
 }
 
 void ModelWithAttr::add_attr( QString key, Model *m ) {
+    m->add_parent( this );
+
     for( int i = 0; i < _data.size(); ++i ) {
         if ( _data[ i ].key == key ) {
             _data[ i ].val = m;
             return;
         }
     }
+
     Attr attr;
     attr.key = key;
     attr.val = m;
@@ -51,13 +54,16 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
         int j = attr_index( key );
         if ( j >= 0 ) {
             res |= _data[ j ].val != model_stack[ os + i ];
+            _data[ j ].val->rem_parent( this );
             _data[ j ].val = model_stack[ os + i ];
+            _data[ j ].val->add_parent( this );
             used[ j ] = true;
         } else {
             res = true;
             Attr attr;
             attr.key = key;
             attr.val = model_stack[ os + i ];
+            attr.val->add_parent( this );
             _data << attr;
             used << true;
         }
@@ -66,6 +72,7 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
     // remove unused
     for( int i = 0; i < used.size(); ++i ) {
         if ( not used[ i ] ) {
+            _data[ i ].val->rem_parent( this );
             _data.remove( i );
             used.remove( i );
             res = true;
@@ -75,7 +82,6 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
 
     model_stack.resize( om );
     string_stack.resize( os );
-    // qDebug() << "-> " << _data;
     return res;
 }
 

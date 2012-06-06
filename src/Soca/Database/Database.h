@@ -28,8 +28,13 @@ public:
     QSet<ClientLoop *>   clients;        ///<
     QSet<Model *>        changed_models; ///< not the most efficient containers...
     quint64              prev_tmp_server_id;
+    quint64              cur_date;
     bool                 reg_changes;    ///<
     bool                 end_round_timer; ///<
+
+private:
+    void _call_onchange_rec( Model *m );
+    void _call_onchange_loc( Model *m, int add );
 };
 
 #endif // DATABASE_H

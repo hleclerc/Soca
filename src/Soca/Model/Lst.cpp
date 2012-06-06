@@ -33,17 +33,23 @@ bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
     int o = model_stack.size() - size;
     for( int i = 0; i < _data.size(); ++i ) {
         if ( _data[ i ] != model_stack[ o + i ] ) {
+            _data[ i ]->rem_parent( this );
             _data[ i ] = model_stack[ o + i ];
+            _data[ i ]->add_parent( this );
             res = true;
         }
     }
 
     // new ones
-    for( int i = _data.size(); i < size; ++i )
+    for( int i = _data.size(); i < size; ++i ) {
         _data << model_stack[ o + i ];
+        _data[ i ]->add_parent( this );
+    }
 
     // trim
     if ( _data.size() != size ) {
+        for( int i = size; i < _data.size(); ++i )
+            _data[ i ]->rem_parent( this );
         _data.resize( size );
         res = true;
     }

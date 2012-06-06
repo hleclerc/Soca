@@ -81,6 +81,7 @@ MP SodaClient::_wait_load( int n ) {
 
 void SodaClient::reg_type_callback( quint64 ptr ) {
     Event event;
+    event.client_loop = client_loop;
     event.event_type = Event::RegType;
     event.n_callback = 0;
     event.ptr = ptr;
@@ -91,6 +92,7 @@ void SodaClient::reg_type_callback( quint64 ptr ) {
 
 void SodaClient::change_callback( Model *m ) {
     Event event;
+    event.client_loop = client_loop;
     event.event_type = Event::Change;
     event.model = m;
     pending_events << event;
@@ -100,6 +102,7 @@ void SodaClient::change_callback( Model *m ) {
 
 void SodaClient::load_callback( Model *m, int n ) {
     Event event;
+    event.client_loop = client_loop;
     event.event_type = Event::Load;
     event.n_callback = n;
     event.model = m;
@@ -110,6 +113,7 @@ void SodaClient::load_callback( Model *m, int n ) {
 
 void SodaClient::disconnected() {
     Event event;
+    event.client_loop = client_loop;
     event.event_type = Event::Disconnection;
     pending_events << event;
 

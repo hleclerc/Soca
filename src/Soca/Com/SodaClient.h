@@ -24,7 +24,10 @@ public:
         bool change() const { return event_type == Change; }
         bool load() const { return event_type == Load; }
 
+        MP mp() { return MP( client_loop, model ); }
+
         //
+        class ClientLoop *client_loop;
         int event_type;
         int n_callback;
         union {

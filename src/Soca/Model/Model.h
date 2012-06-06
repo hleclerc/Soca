@@ -40,9 +40,17 @@ public:
     virtual bool _set( qint64 a, qint32 b );
     virtual bool _set( qint64 a );
 
-    mutable qint64 _server_id;
+    void add_parent( Model *p );
+    void rem_parent( Model *p );
+
+    bool has_been_modified( quint64 cur_date ) const { return _date_last_change >= cur_date; }
+    bool has_been_directly_modified( quint64 cur_date ) const { return _date_last_change == cur_date + 1; }
+
+    QVector<Model *>  parents;
+    quint64           _date_last_change;
+    mutable qint64    _server_id;
     QVector<Callback> _onchange_list;
-    bool _changed_from_ext; ///< true if last change come from the server
+    bool              _changed_from_ext; ///< true if last change come from the server
 };
 
 QDebug operator<<( QDebug dbg, const Model *c );

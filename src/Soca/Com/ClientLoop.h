@@ -42,6 +42,8 @@ public:
 
     void operator<<( const BinOut &data );
 
+    Database *db;
+
 private slots:
     void readyRead();
     void aboutToClose();
@@ -83,8 +85,6 @@ private:
     void out_sig(); ///< signal that there is something to send
 
     //
-    Database *db;
-
     BinOut out; ///< tmp buffer (to be sent to tcpSocket)
     QTcpSocket *tcpSocket;
     QMap<int,Callback> model_callbacks;

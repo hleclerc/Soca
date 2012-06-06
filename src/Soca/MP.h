@@ -16,6 +16,10 @@ public:
     MP operator=( qint64 val );
 
     Model *model() const { return m; }
+    QString type() const { return m ? m->type() : QString(); }
+
+    bool has_been_modified() const;
+    bool has_been_directly_modified() const;
 
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );

@@ -35,6 +35,14 @@ MP MP::operator=( qint64 val ) {
     return *this;
 }
 
+bool MP::has_been_modified() const {
+    return m ? m->has_been_modified( c->db->cur_date ) : false;
+}
+
+bool MP::has_been_directly_modified() const {
+    return m ? m->has_been_directly_modified( c->db->cur_date ) : false;
+}
+
 QDebug operator<<( QDebug dbg, const MP &c ) {
     return dbg << c.m;
 }
