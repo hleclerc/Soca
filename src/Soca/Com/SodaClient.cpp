@@ -15,8 +15,6 @@ SodaClient::SodaClient( const QHostAddress &address, quint16 port ) {
     qevent_loop = 0;
     database = new Database;
     client_loop = new ClientLoop( database, address, port );
-    //if ( not client_loop->is_valid() )
-    //    disconnected();
 
     connect( client_loop, SIGNAL(disconnected()), this, SLOT(disconnected()), Qt::QueuedConnection );
 }
@@ -32,6 +30,11 @@ SodaClient::~SodaClient() {
 
 void SodaClient::reg_type( QString type ) {
     client_loop->reg_type_for_callback( type, this, SLOT(reg_type_callback(quint64)) );
+}
+
+void SodaClient::reg_model( const MP &mp ) {
+    if ( Model *m = mp.model() )
+        m->bind( this, SLOT(change_callback(Model*)) );
 }
 
 MP SodaClient::load_ptr( quint64 ptr ) {
@@ -81,6 +84,15 @@ void SodaClient::reg_type_callback( quint64 ptr ) {
     event.event_type = Event::RegType;
     event.n_callback = 0;
     event.ptr = ptr;
+    pending_events << event;
+
+    qevent_loop->exit();
+}
+
+void SodaClient::change_callback( Model *m ) {
+    Event event;
+    event.event_type = Event::Change;
+    event.model = m;
     pending_events << event;
 
     qevent_loop->exit();

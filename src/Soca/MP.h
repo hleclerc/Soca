@@ -15,6 +15,8 @@ public:
 
     MP operator=( qint64 val );
 
+    Model *model() const { return m; }
+
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );
 

@@ -5,6 +5,13 @@ Model::Model() {
     _server_id = 0;
 }
 
+void Model::bind( QObject *receiver, const char *member ) {
+    Callback cb;
+    cb.receiver = receiver;
+    cb.member = member;
+    _onchange_list << cb;
+}
+
 void Model::add_attr( QString key, Model *m ) {
 }
 

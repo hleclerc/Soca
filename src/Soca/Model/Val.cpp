@@ -1,5 +1,6 @@
 #include "../Sys/BinOut.h"
 #include "Val.h"
+#include <cmath>
 
 Val::Val( qint64 man, qint32 exp ) : man( man ), exp( exp ) {
 }
@@ -35,4 +36,8 @@ bool Val::_set( qint64 a ) {
 
 void Val::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
     uut << 'X' << get_server_id( db ) << man << exp;
+}
+
+Val::operator double() const {
+    return man * std::pow( 10.0, exp );
 }

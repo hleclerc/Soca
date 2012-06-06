@@ -14,11 +14,14 @@ class Database : public QObject {
 public:
     Database();
     Model  *model( qint64 m ) const; ///< server_id -> local Model *
-    Model  *signal_change( Model *m ); ///<
+    Model  *signal_change( Model *m, bool from_ext = false ); ///<
     quint64 new_tmp_server_id();
 
 private slots:
     void    end_round(); ///<
+
+signals:
+    void    _model_sig( Model * );
 
 public:
     QMap<qint64,Model *> model_map;      ///< server_id -> local Model *

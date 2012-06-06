@@ -17,10 +17,11 @@ class SodaClient : public QObject {
     Q_OBJECT
 public:
     struct Event {
-        enum { RegType, Load, Disconnection };
+        enum { RegType, Load, Disconnection, Change };
 
         bool disconnection() const { return event_type == Disconnection; }
         bool reg_type() const { return event_type == RegType; }
+        bool change() const { return event_type == Change; }
         bool load() const { return event_type == Load; }
 
         //
@@ -35,6 +36,7 @@ public:
     SodaClient( const QHostAddress &address, quint16 port );
     ~SodaClient();
 
+    void  reg_model( const MP &mp ); ///< if changed, model will generate an Change event
     void  reg_type( QString type ); ///< permit to get an event if an object of type $type is created on the server
     MP    load_ptr( quint64 ptr ); ///< asynchronous load
     MP    load( QString path ); ///< asynchronous load
@@ -44,6 +46,7 @@ public:
 
 private slots:
     void reg_type_callback( quint64 ptr ); ///< called if an object of a registered type is created on the server
+    void change_callback( Model *m ); ///<
     void load_callback( Model *m, int n ); ///<
     void disconnected(); ///<
 

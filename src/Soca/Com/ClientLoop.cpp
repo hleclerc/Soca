@@ -61,7 +61,6 @@ bool ClientLoop::connected() const {
 
 void ClientLoop::operator<<( const BinOut &data ) {
     out << data;
-    qDebug() << "..." << out.size() << data.size();
     out_sig();
 }
 
@@ -79,27 +78,32 @@ void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const c
 
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
     if ( Model *p = db->model( m ) )
-        p->_set( info );
+        if ( p->_set( info ) )
+            db->signal_change( p, true );
 }
 
 void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
     if ( Model *p = db->model( m ) )
-        p->_set( man, exp );
+        if ( p->_set( man, exp ) )
+            db->signal_change( p, true );
 }
 
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
     if ( Model *p = db->model( m ) )
-        p->_set( info, model_stack, string_stack );
+        if ( p->_set( info, model_stack, string_stack ) )
+            db->signal_change( p, true );
 }
 
 void ClientLoop::rep_update_PI8( qint64 m, quint8 info ) {
     if ( Model *p = db->model( m ) )
-        p->_set( info );
+        if ( p->_set( info ) )
+            db->signal_change( p, true );
 }
 
 void ClientLoop::rep_update_cstr( qint64 m, const char *type_str, int type_len ) {
     if ( Model *p = db->model( m ) )
-        p->_set( type_str, type_len );
+        if ( p->_set( type_str, type_len ) )
+            db->signal_change( p, true );
 }
 
 void ClientLoop::rep_push_model( qint64 m ) {
@@ -117,8 +121,6 @@ void ClientLoop::rep_reg_type( qint64 m, int n_callback ) {
         connect( this, SIGNAL(_type(quint64)), lc.receiver, lc.member );
         emit _type( m );
         disconnect( this, SIGNAL(_type(quint64)), lc.receiver, lc.member );
-
-        quint64_callbacks.remove( n_callback );
     }
 }
 
@@ -137,6 +139,7 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
 
     r->_server_id = m;
     db->model_map[ m ] = r;
+    db->signal_change( r, true );
 }
 
 void ClientLoop::rep_load( qint64 m, int n_callback ) {
@@ -181,7 +184,7 @@ void ClientLoop::readChannelFinished() {
 }
 
 void ClientLoop::send_data() {
-    qDebug() << "sending" << out.size();
+    // qDebug() << "sending" << out.size();
     out << 'E';
 
     tcpSocket->write( out.data() );
