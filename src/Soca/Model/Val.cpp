@@ -38,6 +38,14 @@ void Val::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
     uut << 'X' << get_server_id( db ) << man << exp;
 }
 
+Val::operator int() const {
+    return exp ? int( operator double() ) : man;
+}
+
+Val::operator quint64() const {
+    return exp ? int( operator double() ) : man;
+}
+
 Val::operator double() const {
     return man * std::pow( 10.0, exp );
 }

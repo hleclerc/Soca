@@ -11,9 +11,14 @@ class MP {
 public:
     MP( ClientLoop *c, Model *m );
 
+    MP operator[]( const char *path ) { return operator[]( QString( path ) ); }
     MP operator[]( QString path ); ///< returns a sub-model
 
     MP operator=( qint64 val );
+
+    operator int    () const;
+    operator quint64() const;
+    operator double () const;
 
     Model *model() const { return m; }
     QString type() const { return m ? m->type() : QString(); }

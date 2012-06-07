@@ -32,8 +32,11 @@ public:
     virtual Model   *attr      ( QString key ) const;
     virtual QString  type      () const = 0;
     virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) const {}
-    virtual operator double    () const { return 0; }
     quint64          get_server_id( Database *db ) const; ///<
+
+    virtual operator int       () const { return 0; }
+    virtual operator quint64   () const { return 0; }
+    virtual operator double    () const { return 0; }
 
     virtual bool _set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack );
     virtual bool _set( const char *str, int len );

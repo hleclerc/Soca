@@ -16,3 +16,7 @@ bool Bool::_set( qint64 a ) {
     _data = a;
     return res;
 }
+
+Bool::operator int      () const { return _data; }
+Bool::operator quint64  () const { return _data; }
+Bool::operator double   () const { return _data; }

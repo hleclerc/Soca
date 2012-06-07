@@ -6,6 +6,18 @@
 MP::MP( ClientLoop *c, Model *m ) : c( c ), m( m ) {
 }
 
+MP::operator int() const {
+    return m and not p.size() ? m->operator int() : 0;
+}
+
+MP::operator quint64() const {
+    return m and not p.size() ? m->operator quint64() : 0;
+}
+
+MP::operator double() const {
+    return m and not p.size() ? m->operator double() : 0;
+}
+
 MP MP::operator[]( QString path ) {
     Model *res = m;
     QStringList l = path.split( '.' );

@@ -14,7 +14,9 @@ public:
     virtual bool     _set     ( qint64 a );
     virtual void     write_str( QDebug dbg ) const;
     virtual void     write_usr( BinOut &nut, BinOut &uut, Database *db ) const;
-    virtual operator double    () const;
+    virtual operator int      () const;
+    virtual operator quint64  () const;
+    virtual operator double   () const;
 
     qint64 man;
     qint32 exp;
