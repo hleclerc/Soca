@@ -31,7 +31,7 @@ bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
 
     // already existing elements
     int o = model_stack.size() - size;
-    for( int i = 0; i < _data.size(); ++i ) {
+    for( int i = 0; i < qMin( size, _data.size() ); ++i ) {
         if ( _data[ i ] != model_stack[ o + i ] ) {
             _data[ i ]->rem_parent( this );
             _data[ i ] = model_stack[ o + i ];
