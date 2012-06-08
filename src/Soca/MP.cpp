@@ -1,7 +1,11 @@
+#include "Model/ModelWithAttrAndName.h"
+#include "Model/LstWithType.h"
+#include "Model/Val.h"
+
 #include <QtCore/QStringList>
 #include "Com/ClientLoop.h"
-#include "Model/Val.h"
 #include "MP.h"
+
 
 MP::MP( ClientLoop *c, Model *m ) : c( c ), m( m ) {
 }
@@ -57,6 +61,18 @@ bool MP::has_been_modified() const {
 
 bool MP::has_been_directly_modified() const {
     return m and not p.size() ? m->has_been_directly_modified( c->db->cur_date ) : false;
+}
+
+MP MP::new_obj( QString type ) {
+    return MP( 0, new ModelWithAttrAndName( type ) );
+}
+
+MP MP::new_lst( QString type ) {
+    return MP( 0, new LstWithType( type ) );
+}
+
+MP MP::new_lst() {
+    return MP( 0, new Lst );
 }
 
 QDebug operator<<( QDebug dbg, const MP &c ) {

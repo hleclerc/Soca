@@ -9,6 +9,8 @@ class ClientLoop;
 */
 class MP {
 public:
+    struct NewObj { QString type; };
+
     MP( ClientLoop *c, Model *m );
 
     MP operator[]( const char *path ) const { return operator[]( QString( path ) ); }
@@ -28,6 +30,11 @@ public:
 
     bool has_been_modified() const;
     bool has_been_directly_modified() const;
+
+    static MP new_obj( QString type );
+
+    static MP new_lst();
+    static MP new_lst( QString type ); ///< Lst with alternate type
 
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );
