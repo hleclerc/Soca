@@ -34,7 +34,7 @@ void SodaClient::reg_type( QString type ) {
 
 void SodaClient::reg_model( const MP &mp ) {
     if ( Model *m = mp.model() )
-        m->bind( this, SLOT(change_callback(Model*)) );
+        client_loop->reg_model( m, this, SLOT(change_callback(Model*)) );
 }
 
 MP SodaClient::load_ptr( quint64 ptr ) {
@@ -66,6 +66,14 @@ void SodaClient::_wait() {
     qevent_loop->exec();
 }
 
+void SodaClient::_exit() {
+    if ( qevent_loop ) {
+        qevent_loop->exit();
+        qevent_loop = 0;
+    }
+}
+
+
 MP SodaClient::_wait_load( int n ) {
     while ( true ) {
         _wait();
@@ -87,7 +95,7 @@ void SodaClient::reg_type_callback( quint64 ptr ) {
     event.ptr = ptr;
     pending_events << event;
 
-    qevent_loop->exit();
+    _exit();
 }
 
 void SodaClient::change_callback( Model *m ) {
@@ -97,7 +105,7 @@ void SodaClient::change_callback( Model *m ) {
     event.model = m;
     pending_events << event;
 
-    qevent_loop->exit();
+    _exit();
 }
 
 void SodaClient::load_callback( Model *m, int n ) {
@@ -108,7 +116,7 @@ void SodaClient::load_callback( Model *m, int n ) {
     event.model = m;
     pending_events << event;
 
-    qevent_loop->exit();
+    _exit();
 }
 
 void SodaClient::disconnected() {
@@ -117,7 +125,6 @@ void SodaClient::disconnected() {
     event.event_type = Event::Disconnection;
     pending_events << event;
 
-    if ( qevent_loop )
-        qevent_loop->exit();
+    _exit();
 }
 

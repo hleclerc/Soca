@@ -18,7 +18,7 @@ MP::operator double() const {
     return m and not p.size() ? m->operator double() : 0;
 }
 
-MP MP::operator[]( QString path ) {
+MP MP::operator[]( QString path ) const {
     Model *res = m;
     QStringList l = path.split( '.' );
     for( int i = 0; res and i < l.size(); ++i ) {
@@ -35,6 +35,10 @@ MP MP::operator[]( QString path ) {
     return MP( c, res );
 }
 
+MP MP::operator[]( int index ) const {
+    return MP( c, m and not p.size() ? m->attr( index ) : 0 );
+}
+
 MP MP::operator=( qint64 val ) {
     if ( p.size() and m ) {
         Model *o = m;
@@ -48,11 +52,11 @@ MP MP::operator=( qint64 val ) {
 }
 
 bool MP::has_been_modified() const {
-    return m ? m->has_been_modified( c->db->cur_date ) : false;
+    return m and not p.size() ? m->has_been_modified( c->db->cur_date ) : false;
 }
 
 bool MP::has_been_directly_modified() const {
-    return m ? m->has_been_directly_modified( c->db->cur_date ) : false;
+    return m and not p.size() ? m->has_been_directly_modified( c->db->cur_date ) : false;
 }
 
 QDebug operator<<( QDebug dbg, const MP &c ) {

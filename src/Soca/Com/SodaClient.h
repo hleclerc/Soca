@@ -55,6 +55,7 @@ private slots:
 
 private:
     void _wait();
+    void _exit(); ///< exit from qevent_loop
     MP   _wait_load( int n ); ///< asynchronous load
 
     class ClientLoop *client_loop;

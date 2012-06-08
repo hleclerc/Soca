@@ -23,6 +23,14 @@ Model *Model::attr( QString key ) const {
     return 0;
 }
 
+Model *Model::attr( int index ) const {
+    return 0;
+}
+
+int Model::size() const {
+    return 0;
+}
+
 quint64 Model::get_server_id( Database *db ) const {
     if ( not _server_id )
         _server_id = db->new_tmp_server_id();

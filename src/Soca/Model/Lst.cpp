@@ -22,6 +22,14 @@ Model *Lst::attr( QString key ) const {
     return index >= 0 and index < _data.size() ? _data[ index ] : 0;
 }
 
+Model *Lst::attr( int index ) const {
+    return index >= 0 and index < _data.size() ? _data[ index ] : 0;
+}
+
+int Lst::size() const {
+    return _data.size();
+}
+
 QString Lst::type() const {
     return "Lst";
 }

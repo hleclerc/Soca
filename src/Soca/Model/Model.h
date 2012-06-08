@@ -30,6 +30,8 @@ public:
     virtual void     add_attr  ( QString key, Model *m );
     virtual int      attr_index( QString key ) const;
     virtual Model   *attr      ( QString key ) const;
+    virtual Model   *attr      ( int index   ) const;
+    virtual int      size      () const;
     virtual QString  type      () const = 0;
     virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) const {}
     quint64          get_server_id( Database *db ) const; ///<

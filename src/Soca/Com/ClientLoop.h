@@ -35,6 +35,8 @@ public:
     Model *load_ptr_async( quint64 ptr ); ///<
 
     void reg_type_for_callback( QString type, QObject *receiver, const char *member ); ///<
+    void reg_model( Model *m, QObject *receiver, const char *member );
+
 
     Model *signal_change( Model *m ) {
         return db->signal_change( m );
@@ -54,6 +56,7 @@ private slots:
 signals:
     void disconnected();
     void _load( Model *, int n_callback ); ///< dummy signal
+    void _model( Model * ); ///< dummy signal
     void _type( quint64 ); ///< dummy signal
 
 private:

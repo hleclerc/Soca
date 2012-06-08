@@ -75,6 +75,13 @@ void ClientLoop::reg_type_for_callback( QString type, QObject *receiver, const c
     out_sig();
 }
 
+void ClientLoop::reg_model( Model *m, QObject *receiver, const char *member ) {
+    m->bind( receiver, member );
+    db->signal_change( m, true );
+    //    connect( this, SIGNAL(_model(Model*)), receiver, member );
+    //    emit _model( m );
+    //    disconnect( this, SIGNAL(_model(Model*)), receiver, member );
+}
 
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
     if ( Model *p = db->model( m ) )
