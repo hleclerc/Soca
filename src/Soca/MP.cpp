@@ -7,7 +7,13 @@
 #include "MP.h"
 
 
+MP::MP( ClientLoop *c, Model *m, QString p ) : c( c ), m( m ), p( p ) {
+}
+
 MP::MP( ClientLoop *c, Model *m ) : c( c ), m( m ) {
+}
+
+MP::MP( Model *m ) : c( 0 ), m( m ) {
 }
 
 MP::operator int() const {
@@ -33,7 +39,10 @@ MP MP::operator[]( QString path ) const {
                 n.replace( ']', ' ' );
                 n = n.trimmed();
             }
-            res = res->attr( n );
+            Model *tmp = res->attr( n );
+            if ( tmp == 0 and n.indexOf( '.' ) < 0 and n.indexOf( '/' ) < 0 )
+                return MP( c, res, n );
+            res = tmp;
         }
     }
     return MP( c, res );
@@ -41,18 +50,6 @@ MP MP::operator[]( QString path ) const {
 
 MP MP::operator[]( int index ) const {
     return MP( c, m and not p.size() ? m->attr( index ) : 0 );
-}
-
-MP MP::operator=( qint64 val ) {
-    if ( p.size() and m ) {
-        Model *o = m;
-        m = new Val( val ); //c->factory
-        o->add_attr( p, m );
-        return *this;
-    }
-    if ( m and m->_set( val ) )
-        c->signal_change( m );
-    return *this;
 }
 
 bool MP::has_been_modified() const {
@@ -77,4 +74,12 @@ MP MP::new_lst() {
 
 QDebug operator<<( QDebug dbg, const MP &c ) {
     return dbg << c.m;
+}
+
+Model *MP::conv( const MP &mp ) {
+    return mp.p.size() ? 0 : mp.m;
+}
+
+Model *MP::conv( qint64 val ) {
+    return new Val( val );
 }

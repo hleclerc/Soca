@@ -11,6 +11,11 @@ void Lst::write_str( QDebug dbg ) const {
     dbg.nospace() << "]";
 }
 
+void Lst::push( Model *m ) {
+    if ( m )
+        _data << m;
+}
+
 int Lst::attr_index( QString key ) const {
     bool ok;
     int res = key.toInt( &ok );

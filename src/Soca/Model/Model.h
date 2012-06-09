@@ -28,6 +28,7 @@ public:
 
     virtual void     write_str ( QDebug dbg ) const = 0;
     virtual void     add_attr  ( QString key, Model *m );
+    virtual void     push      ( Model *m );
     virtual int      attr_index( QString key ) const;
     virtual Model   *attr      ( QString key ) const;
     virtual Model   *attr      ( int index   ) const;
@@ -43,6 +44,7 @@ public:
     virtual bool _set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack );
     virtual bool _set( const char *str, int len );
     virtual bool _set( qint64 a, qint32 b );
+    virtual bool _set( Model *m );
     virtual bool _set( qint64 a );
 
     void add_parent( Model *p );

@@ -13,6 +13,7 @@ public:
     virtual void    write_str ( QDebug  dbg ) const;
     virtual int     attr_index( QString key ) const;
     virtual Model  *attr      ( QString key ) const;
+    virtual void    push      ( Model *m );
     virtual Model  *attr      ( int index   ) const;
     virtual int     size      () const;
     virtual QString type() const;

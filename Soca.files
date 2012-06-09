@@ -33,3 +33,5 @@ src/Soca/Com/SodaClient.h
 src/Soca/Com/SodaClient.cpp
 src/Soca/Model/LstWithType.h
 src/Soca/Model/LstWithType.cpp
+src/Soca/MP.h
+src/Soca/MP.cpp

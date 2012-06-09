@@ -15,6 +15,9 @@ void Model::bind( QObject *receiver, const char *member ) {
 void Model::add_attr( QString key, Model *m ) {
 }
 
+void Model::push( Model *m ) {
+}
+
 int Model::attr_index( QString key ) const {
     return -1;
 }
@@ -46,6 +49,10 @@ bool Model::_set( const char *str, int len ) {
 }
 
 bool Model::_set( qint64, qint32 ) {
+    return false;
+}
+
+bool Model::_set( Model *m ) {
     return false;
 }
 
