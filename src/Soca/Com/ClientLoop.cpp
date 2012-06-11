@@ -191,7 +191,6 @@ void ClientLoop::readChannelFinished() {
 }
 
 void ClientLoop::send_data() {
-    // qDebug() << "sending" << out.size();
     out << 'E';
 
     tcpSocket->write( out.data() );

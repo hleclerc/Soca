@@ -6,10 +6,12 @@ Lst::Lst() {
 }
 
 void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
+    qDebug() << _data.size();
     for( int i = 0; i < _data.size(); ++i )
         _data[ i ]->write_nsr( nut, uut, db );
     for( int i = 0; i < _data.size(); ++i )
         uut << 'P' << quint64( _data[ i ] );
+    qDebug() << "pouet";
     uut << 'U' << quint64( this ) << quint32( _data.size() );
 }
 

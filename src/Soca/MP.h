@@ -67,6 +67,7 @@ public:
     bool ok() const { return m and not p.size(); }
 
     quint64 date_last_change() const;
+    bool changed_from_ext() const;
 
     bool has_been_modified() const;
     bool has_been_directly_modified() const;
