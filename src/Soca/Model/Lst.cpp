@@ -5,7 +5,6 @@
 Lst::Lst() {
 }
 
-
 void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
     for( int i = 0; i < _data.size(); ++i )
         _data[ i ]->write_nsr( nut, uut, db );

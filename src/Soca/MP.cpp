@@ -52,6 +52,10 @@ MP MP::operator[]( int index ) const {
     return MP( c, m and not p.size() ? m->attr( index ) : 0 );
 }
 
+quint64 MP::date_last_change() const {
+    return m ? m->_date_last_change : 0;
+}
+
 bool MP::has_been_modified() const {
     return m and not p.size() ? m->has_been_modified( c->db->cur_date ) : false;
 }
