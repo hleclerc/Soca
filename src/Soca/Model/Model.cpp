@@ -1,4 +1,5 @@
 #include "../Database/Database.h"
+#include "../Sys/BinOut.h"
 #include "Model.h"
 
 Model::Model() {
@@ -39,6 +40,14 @@ quint64 Model::get_server_id( Database *db ) const {
         _server_id = db->new_tmp_server_id();
     return _server_id;
 }
+
+void Model::write_nsr( BinOut &nut, BinOut &uut, Database *db ) const {
+    if ( not _server_id ) {
+        write_usr( nut, uut, db );
+        nut << 'N' << quint64( this ) << type();
+    }
+}
+
 
 bool Model::_set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack ) {
     return false;

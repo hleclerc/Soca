@@ -25,6 +25,7 @@ public:
         bool load() const { return event_type == Load; }
 
         MP mp() { return MP( client_loop, model ); }
+        operator bool() const { return event_type != Disconnection; }
 
         //
         class ClientLoop *client_loop;
@@ -39,8 +40,8 @@ public:
     SodaClient( const QHostAddress &address, quint16 port );
     ~SodaClient();
 
+    void  reg_type( QString type, bool auto_reg_model = true ); ///< permit to get an event if an object of type $type is created on the server
     void  reg_model( const MP &mp ); ///< if changed, model will generate an Change event
-    void  reg_type( QString type ); ///< permit to get an event if an object of type $type is created on the server
     MP    load_ptr( quint64 ptr ); ///< asynchronous load
     MP    load( QString path ); ///< asynchronous load
     Event event(); ///< wait for an event
@@ -48,8 +49,10 @@ public:
     bool   connected() const;
 
 private slots:
+    void reg_type_callback_auto_reg( quint64 ptr ); ///< called if an object of a registered type is created on the server
     void reg_type_callback( quint64 ptr ); ///< called if an object of a registered type is created on the server
     void change_callback( Model *m ); ///<
+    void load_for_reg_callback( Model *m, int n ); ///<
     void load_callback( Model *m, int n ); ///<
     void disconnected(); ///<
 

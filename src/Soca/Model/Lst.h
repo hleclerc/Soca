@@ -10,6 +10,7 @@ class Lst : public Model {
 public:
     Lst();
 
+    virtual void    write_usr ( BinOut &nut, BinOut &uut, Database *db ) const;
     virtual void    write_str ( QDebug  dbg ) const;
     virtual int     attr_index( QString key ) const;
     virtual Model  *attr      ( QString key ) const;

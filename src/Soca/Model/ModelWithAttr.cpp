@@ -1,8 +1,19 @@
 #include "ModelWithAttr.h"
+#include "../Sys/BinOut.h"
 #include <QtCore/QVector>
 #include <QtCore/QDebug>
 
 ModelWithAttr::ModelWithAttr() {
+}
+
+void ModelWithAttr::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
+    for( int i = 0; i < _data.size(); ++i )
+        _data[ i ].val->write_nsr( nut, uut, db );
+    for( int i = 0; i < _data.size(); ++i ) {
+        uut << 'P' << quint64( _data[ i ].val );
+        uut << 'p' << _data[ i ].key;
+    }
+    uut << 'U' << quint64( this ) << quint32( _data.size() );
 }
 
 void ModelWithAttr::add_attr( QString key, Model *m ) {

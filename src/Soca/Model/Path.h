@@ -9,6 +9,7 @@ class Path : public ModelWithAttr {
 public:
     Path();
 
+    virtual void write_usr ( BinOut &nut, BinOut &uut, Database *db ) const;
     virtual void write_str( QDebug dbg ) const;
     virtual QString type() const;
 

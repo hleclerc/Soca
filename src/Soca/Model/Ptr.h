@@ -9,9 +9,10 @@ class Ptr : public Model {
 public:
     Ptr();
 
-    virtual void write_str( QDebug dbg ) const;
+    virtual void    write_usr ( BinOut &nut, BinOut &uut, Database *db ) const;
+    virtual void    write_str( QDebug dbg ) const;
     virtual QString type() const;
-    virtual bool _set( qint64 a );
+    virtual bool    _set( qint64 a );
 
     qint64 _data;
 };

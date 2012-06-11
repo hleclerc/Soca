@@ -3,6 +3,9 @@
 Path::Path() {
 }
 
+void Path::write_usr ( BinOut &nut, BinOut &uut, Database *db ) const {
+}
+
 QString Path::type() const {
     return "Path";
 }

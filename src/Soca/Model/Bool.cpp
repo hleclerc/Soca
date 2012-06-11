@@ -1,6 +1,11 @@
+#include "../Sys/BinOut.h"
 #include "Bool.h"
 
 Bool::Bool( bool val ) : _data( val ) {
+}
+
+void Bool::write_usr ( BinOut &nut, BinOut &uut, Database *db ) const {
+    uut << 'Y' << quint64( this ) << (unsigned char)_data;
 }
 
 void Bool::write_str( QDebug dbg ) const {

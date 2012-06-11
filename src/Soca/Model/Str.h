@@ -9,10 +9,11 @@ class Str : public Model {
 public:
     Str();
 
-    virtual void write_str( QDebug dbg ) const;
+    virtual void    write_usr ( BinOut &nut, BinOut &uut, Database *db ) const;
+    virtual void    write_str( QDebug dbg ) const;
     virtual QString type() const;
 
-    virtual bool _set( const char *str, int len );
+    virtual bool    _set( const char *str, int len );
 
     QString _data;
 };

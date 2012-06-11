@@ -15,6 +15,7 @@ public:
     };
     ModelWithAttr();
 
+    virtual void   write_usr ( BinOut &nut, BinOut &uut, Database *db ) const;
     virtual void   write_str ( QDebug  dbg ) const;
     virtual void   add_attr  ( QString key, Model *m );
     virtual int    attr_index( QString key ) const;

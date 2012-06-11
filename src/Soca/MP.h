@@ -42,7 +42,7 @@ public:
     }
 
     template<class T>
-    void push( const T &val ) {
+    MP &operator<<( const T &val ) {
         if ( p.size() and m ) {
             Model *o = m;
             m = new Lst;
@@ -54,6 +54,7 @@ public:
             if ( c )
                 c->signal_change( m );
         }
+        return *this;
     }
 
     operator int    () const;

@@ -28,8 +28,11 @@ SodaClient::~SodaClient() {
     }
 }
 
-void SodaClient::reg_type( QString type ) {
-    client_loop->reg_type_for_callback( type, this, SLOT(reg_type_callback(quint64)) );
+void SodaClient::reg_type( QString type, bool auto_reg_model ) {
+    if ( auto_reg_model )
+        client_loop->reg_type_for_callback( type, this, SLOT(reg_type_callback_auto_reg(quint64)) );
+    else
+        client_loop->reg_type_for_callback( type, this, SLOT(reg_type_callback(quint64)) );
 }
 
 void SodaClient::reg_model( const MP &mp ) {
@@ -87,6 +90,10 @@ MP SodaClient::_wait_load( int n ) {
     }
 }
 
+void SodaClient::reg_type_callback_auto_reg( quint64 ptr ) {
+    client_loop->load_ptr( ptr, this, SLOT(load_for_reg_callback(Model*,int)) );
+}
+
 void SodaClient::reg_type_callback( quint64 ptr ) {
     Event event;
     event.client_loop = client_loop;
@@ -117,6 +124,11 @@ void SodaClient::load_callback( Model *m, int n ) {
     pending_events << event;
 
     _exit();
+}
+
+void SodaClient::load_for_reg_callback( Model *m, int n ) {
+    if ( m )
+        client_loop->reg_model( m, this, SLOT(change_callback(Model*)) );
 }
 
 void SodaClient::disconnected() {

@@ -1,7 +1,17 @@
+#include "../Sys/BinOut.h"
 #include <QtCore/QDebug>
 #include "Lst.h"
 
 Lst::Lst() {
+}
+
+
+void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
+    for( int i = 0; i < _data.size(); ++i )
+        _data[ i ]->write_nsr( nut, uut, db );
+    for( int i = 0; i < _data.size(); ++i )
+        uut << 'P' << quint64( _data[ i ] );
+    uut << 'U' << quint64( this ) << quint32( _data.size() );
 }
 
 void Lst::write_str( QDebug dbg ) const {
