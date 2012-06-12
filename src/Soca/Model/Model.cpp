@@ -2,7 +2,10 @@
 #include "../Sys/BinOut.h"
 #include "Model.h"
 
+quint64 Model::_cur_op_id = 0;
+
 Model::Model() {
+    _op_id = 0;
     _server_id = 0;
 }
 
@@ -29,6 +32,10 @@ Model *Model::attr( QString key ) const {
 
 Model *Model::attr( int index ) const {
     return 0;
+}
+
+QString Model::key( int index ) const {
+    return QString();
 }
 
 int Model::size() const {

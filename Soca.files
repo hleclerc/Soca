@@ -35,3 +35,5 @@ src/Soca/Model/LstWithType.h
 src/Soca/Model/LstWithType.cpp
 src/Soca/MP.h
 src/Soca/MP.cpp
+src/Soca/Updater.h
+src/Soca/Updater.cpp

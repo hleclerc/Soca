@@ -39,6 +39,18 @@ Model *ModelWithAttr::attr( QString key ) const {
     return 0;
 }
 
+Model *ModelWithAttr::attr( int index ) const {
+    return index < _data.size() ? _data[ index ].val : 0;
+}
+
+QString ModelWithAttr::key( int index ) const {
+    return index < _data.size() ? _data[ index ].key : 0;
+}
+
+int ModelWithAttr::size() const {
+    return _data.size();
+}
+
 int ModelWithAttr::attr_index( QString key ) const {
     for( int i = 0; i < _data.size(); ++i )
         if ( _data[ i ].key == key )

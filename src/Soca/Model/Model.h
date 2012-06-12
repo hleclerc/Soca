@@ -32,6 +32,7 @@ public:
     virtual int      attr_index( QString key ) const;
     virtual Model   *attr      ( QString key ) const;
     virtual Model   *attr      ( int index   ) const;
+    virtual QString  key       ( int index ) const;
     virtual int      size      () const;
     virtual QString  type      () const = 0;
     virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) = 0;
@@ -62,6 +63,9 @@ public:
     mutable qint64    _server_id;
     QVector<Callback> _onchange_list;
     bool              _changed_from_ext; ///< true if last change come from the server
+
+    mutable quint64   _op_id;
+    static  quint64   _cur_op_id;
 };
 
 QDebug operator<<( QDebug dbg, const Model *c );
