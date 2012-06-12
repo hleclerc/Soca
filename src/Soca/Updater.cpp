@@ -1,17 +1,15 @@
 #include "Updater.h"
 
 bool has_something_to_compute_else_than( Model *m, Model *a ) {
-    if ( m->_op_id == Model::_cur_op_id )
+    if ( m == 0 or m->_op_id == Model::_cur_op_id )
         return false;
     m->_op_id = Model::_cur_op_id;
 
-    if ( m == a )
-        return false;
-
     for( int i = 0; i < m->size(); ++i ) {
-        if ( m->key( i ) == "_can_be_computed" and m->attr( i ) and m->attr( i )->operator int() % 2 )
+        Model *t = m->attr( i );
+        if ( m->key( i ) == "_can_be_computed" and t and t != a and t->operator int() % 2 )
             return true;
-        if ( has_something_to_compute_else_than( m->attr( i ), a ) )
+        if ( has_something_to_compute_else_than( t, a ) )
             return true;
     }
     return false;
@@ -19,10 +17,16 @@ bool has_something_to_compute_else_than( Model *m, Model *a ) {
 
 void Updater::exec( const MP &mp ) {
     // nothing to compute ?
-    ++Model::_cur_op_id;
     int cbc = mp[ "_can_be_computed" ];
-    if ( cbc % 2 and has_something_to_compute_else_than( mp.model(), mp[ "_can_be_computed" ].model() ) )
+    if ( cbc % 2 == 0 )
         return;
+
+    // waiting for another computation ?
+    ++Model::_cur_op_id;
+    if ( has_something_to_compute_else_than( mp.model(), mp[ "_can_be_computed" ].model() ) ) {
+        qDebug() << "yop";
+        return;
+    }
 
     //
     if ( cbc == 1 ) {
