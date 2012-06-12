@@ -95,6 +95,10 @@ void ClientLoop::rep_update_6432( qint64 m, qint64 man, qint32 exp ) {
             db->signal_change( p, true );
 }
 
+void ClientLoop::rep_tmp_id_to_real( qint64 old_ptr, qint64 new_ptr ) {
+    db->tmp_id_to_real( old_ptr, new_ptr );
+}
+
 void ClientLoop::rep_update_PI32( qint64 m, qint32 info ) {
     if ( Model *p = db->model( m ) )
         if ( p->_set( info, model_stack, string_stack ) )

@@ -15,7 +15,8 @@ public:
     Database();
     Model  *model( qint64 m ) const; ///< server_id -> local Model *
     Model  *signal_change( Model *m, bool from_ext = false ); ///<
-    quint64 new_tmp_server_id();
+    void    tmp_id_to_real( qint64 old_ptr, qint64 new_ptr );
+    quint64 new_tmp_server_id( Model *m );
 
 private slots:
     void    end_round(); ///<

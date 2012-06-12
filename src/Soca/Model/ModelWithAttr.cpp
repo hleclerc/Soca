@@ -6,14 +6,14 @@
 ModelWithAttr::ModelWithAttr() {
 }
 
-void ModelWithAttr::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
+void ModelWithAttr::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
     for( int i = 0; i < _data.size(); ++i )
         _data[ i ].val->write_nsr( nut, uut, db );
     for( int i = 0; i < _data.size(); ++i ) {
-        uut << 'P' << quint64( _data[ i ].val );
+        uut << 'P' << _data[ i ].val->_server_id;
         uut << 'p' << _data[ i ].key;
     }
-    uut << 'U' << quint64( this ) << quint32( _data.size() );
+    uut << 'U' << _server_id << quint32( _data.size() );
 }
 
 void ModelWithAttr::add_attr( QString key, Model *m ) {

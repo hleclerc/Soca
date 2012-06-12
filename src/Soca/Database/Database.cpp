@@ -75,7 +75,18 @@ Model *Database::signal_change( Model *m, bool from_ext ) {
     }
 }
 
-quint64 Database::new_tmp_server_id() {
+quint64 Database::new_tmp_server_id( Model *m ) {
     while ( not ( ++prev_tmp_server_id % 4 ) );
+    model_map[ prev_tmp_server_id ] = m;
     return prev_tmp_server_id;
+}
+
+void Database::tmp_id_to_real( qint64 old_ptr, qint64 new_ptr ) {
+    if ( old_ptr % 4 ) {
+        QMap<qint64,Model *>::iterator iter = model_map.find( old_ptr );
+        if ( iter != model_map.end() ) {
+            model_map.erase( iter );
+            model_map[ new_ptr ] = iter.value();
+        }
+    }
 }

@@ -5,6 +5,18 @@
 Val::Val( qint64 man, qint32 exp ) : man( man ), exp( exp ) {
 }
 
+Val::Val( double val ) {
+    //double frexp( val, exp2 );
+    if ( val ) {
+        exp = qint32( log10( fabs( val ) ) ) - 18;
+        man = round( val / pow( 10.0, exp ) );
+    } else {
+        exp = 0;
+        man = 0;
+    }
+}
+
+
 void Val::write_str( QDebug dbg ) const {
     if ( exp )
         dbg.nospace() << man << "e" << exp;
@@ -34,7 +46,7 @@ bool Val::_set( qint64 a ) {
     return false;
 }
 
-void Val::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
+void Val::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
     uut << 'X' << get_server_id( db ) << man << exp;
 }
 

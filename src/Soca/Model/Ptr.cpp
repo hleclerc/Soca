@@ -4,8 +4,8 @@
 Ptr::Ptr() : _data( 0 ) {
 }
 
-void Ptr::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
-    uut << 'V' << quint64( this ) << quint64( _data );
+void Ptr::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
+    uut << 'V' << _server_id << quint64( _data );
 }
 
 void Ptr::write_str( QDebug dbg ) const {

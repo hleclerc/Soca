@@ -34,10 +34,12 @@ public:
     virtual Model   *attr      ( int index   ) const;
     virtual int      size      () const;
     virtual QString  type      () const = 0;
-    virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) const = 0;
-    quint64          get_server_id( Database *db ) const; ///<
+    virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) = 0;
+    virtual void     clear     () {}
+    quint64          get_server_id( Database *db ); ///<
+    virtual QString  underlying_type() const;
 
-    void write_nsr( BinOut &nut, BinOut &uut, Database *db ) const;
+    void write_nsr( BinOut &nut, BinOut &uut, Database *db );
 
     virtual operator int       () const { return 0; }
     virtual operator quint64   () const { return 0; }

@@ -3,7 +3,7 @@
 Path::Path() {
 }
 
-void Path::write_usr ( BinOut &nut, BinOut &uut, Database *db ) const {
+void Path::write_usr ( BinOut &nut, BinOut &uut, Database *db ) {
 }
 
 QString Path::type() const {

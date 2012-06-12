@@ -9,7 +9,7 @@
 class LstWithType : public Lst {
 public:
     LstWithType( QString type );
-    virtual QString type() const;
+    virtual QString underlying_type() const;
 
     QString _type;
 };

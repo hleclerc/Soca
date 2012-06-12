@@ -35,16 +35,24 @@ int Model::size() const {
     return 0;
 }
 
-quint64 Model::get_server_id( Database *db ) const {
+quint64 Model::get_server_id( Database *db ) {
     if ( not _server_id )
-        _server_id = db->new_tmp_server_id();
+        _server_id = db->new_tmp_server_id( this );
     return _server_id;
 }
 
-void Model::write_nsr( BinOut &nut, BinOut &uut, Database *db ) const {
+QString Model::underlying_type() const {
+    return type();
+}
+
+
+void Model::write_nsr( BinOut &nut, BinOut &uut, Database *db ) {
     if ( not _server_id ) {
+        if ( type() != underlying_type() )
+            nut << 'n' << get_server_id( db ) << type() << underlying_type();
+        else
+            nut << 'N' << get_server_id( db ) << type();
         write_usr( nut, uut, db );
-        nut << 'N' << quint64( this ) << type();
     }
 }
 

@@ -22,6 +22,8 @@ public:
     MP &operator=( const MP &val ) {
         if ( p.size() and m ) {
             m->add_attr( p, val.m );
+            if ( c )
+                c->signal_change( m );
             m = val.m;
             p.clear();
         } else if ( m and m->_set( val.m ) and c )
@@ -35,6 +37,8 @@ public:
             Model *o = m;
             m = conv( val );
             o->add_attr( p, m );
+            if ( c )
+                c->signal_change( o );
             p.clear();
         } else if ( m and m->_set( val ) and c )
             c->signal_change( m );
@@ -47,6 +51,8 @@ public:
             Model *o = m;
             m = new Lst;
             o->add_attr( p, m );
+            if ( c )
+                c->signal_change( m );
             p.clear();
         }
         if ( m ) {
@@ -64,6 +70,7 @@ public:
     Model *model() const { return m; }
     QString type() const { return m ? m->type() : QString(); }
     int size() const { return m ? m->size() : 0; }
+    void clear() { if ( m ) { m->clear(); if ( c ) c->signal_change( m ); } }
     bool ok() const { return m and not p.size(); }
 
     quint64 date_last_change() const;
@@ -81,6 +88,8 @@ private:
     friend QDebug operator<<( QDebug dbg, const MP &c );
     static Model *conv( const MP &mp );
     static Model *conv( qint64 val );
+    static Model *conv( qint32 val );
+    static Model *conv( double val );
 
     ClientLoop *c;
     QString p;

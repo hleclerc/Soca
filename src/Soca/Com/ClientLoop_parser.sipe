@@ -1,19 +1,21 @@
-rep_load_ptr    = 'l' uint64_bin_le[ v ]  { cmd_load_ptr( sipe_data->u, sipe_data->v ); }
-rep_change      = 'C' uint64_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data->w ); }
+rep_tmp_id_to_real = 'T' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_tmp_id_to_real( sipe_data->model_id, sipe_data->ptr ); }
+rep_update_PI32    = 'U' uint64_bin_le[ model_id ] uint32_bin_le[ len ] { rep_update_PI32( sipe_data->model_id, sipe_data->len ); }
+rep_update_PI64    = 'V' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_update_PI64( sipe_data->model_id, sipe_data->ptr ); }
+rep_update_cstr    = 'W' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_update_cstr( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
+rep_update_6432    = 'X' uint64_bin_le[ model_id ] int64_bin_le[ i64 ] uint32_bin_le[ len ] { rep_update_6432( sipe_data->model_id, sipe_data->i64, sipe_data->len ); }
+rep_update_PI8     = 'Y' uint64_bin_le[ model_id ] uint8_bin_le[ pi8 ] { rep_update_PI8( sipe_data->model_id, sipe_data->pi8 ); }
+rep_push_string    = 'p' str_32[ len, str ] { rep_push_string( sipe_data->str.data(), sipe_data->len ); }
+rep_push_model     = 'P' uint64_bin_le[ model_id ] { rep_push_model( sipe_data->model_id ); }
+rep_reg_type       = 'R' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_reg_type( sipe_data->model_id, sipe_data->callback ); }
+rep_creation       = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
 
-rep_update_PI32 = 'U' uint64_bin_le[ model_id ] uint32_bin_le[ len ] { rep_update_PI32( sipe_data->model_id, sipe_data->len ); }
-rep_update_PI64 = 'V' uint64_bin_le[ model_id ] uint64_bin_le[ ptr ] { rep_update_PI64( sipe_data->model_id, sipe_data->ptr ); }
-rep_update_cstr = 'W' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_update_cstr( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
-rep_update_6432 = 'X' uint64_bin_le[ model_id ] int64_bin_le[ i64 ] uint32_bin_le[ len ] { rep_update_6432( sipe_data->model_id, sipe_data->i64, sipe_data->len ); }
-rep_update_PI8  = 'Y' uint64_bin_le[ model_id ] uint8_bin_le[ pi8 ] { rep_update_PI8( sipe_data->model_id, sipe_data->pi8 ); }
-rep_push_string = 'p' str_32[ len, str ] { rep_push_string( sipe_data->str.data(), sipe_data->len ); }
-rep_push_model  = 'P' uint64_bin_le[ model_id ] { rep_push_model( sipe_data->model_id ); }
-rep_reg_type    = 'R' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_reg_type( sipe_data->model_id, sipe_data->callback ); }
-rep_creation    = 'N' uint64_bin_le[ model_id ] str_32[ len, str ] { rep_creation( sipe_data->model_id, sipe_data->str.data(), sipe_data->len ); }
-rep_load        = 'L' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_load( sipe_data->model_id, sipe_data->callback ); }
-rep_end         = 'E' { rep_end(); }
+rep_load_ptr       = 'l' uint64_bin_le[ v ]  { cmd_load_ptr( sipe_data->u, sipe_data->v ); }
+rep_load           = 'L' uint64_bin_le[ model_id ] uint32_bin_le[ callback ] { rep_load( sipe_data->model_id, sipe_data->callback ); }
+rep_change         = 'C' uint64_bin_le[ v ]  { cmd_change( sipe_data->v, sipe_data->w ); }
+rep_end            = 'E' { rep_end(); }
 
 main = (
+    rep_tmp_id_to_real |
     rep_update_PI32 |
     rep_update_PI64 |
     rep_update_cstr |

@@ -89,5 +89,13 @@ Model *MP::conv( const MP &mp ) {
 }
 
 Model *MP::conv( qint64 val ) {
+    return new Val( val, 0 );
+}
+
+Model *MP::conv( qint32 val ) {
+    return new Val( val, 0 );
+}
+
+Model *MP::conv( double val ) {
     return new Val( val );
 }

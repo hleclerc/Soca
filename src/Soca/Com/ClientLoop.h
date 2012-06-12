@@ -66,6 +66,7 @@ private:
     };
 
     // parse
+    void rep_tmp_id_to_real( qint64 old_ptr, qint64 new_ptr ); ///<
     void rep_update_PI32( qint64 m, qint32 info ); ///<
     void rep_update_PI64( qint64 m, qint64 info ); ///<
     void rep_update_PI8 ( qint64 m, quint8 info ); ///<

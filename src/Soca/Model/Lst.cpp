@@ -5,14 +5,12 @@
 Lst::Lst() {
 }
 
-void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) const {
-    qDebug() << _data.size();
+void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
     for( int i = 0; i < _data.size(); ++i )
         _data[ i ]->write_nsr( nut, uut, db );
     for( int i = 0; i < _data.size(); ++i )
-        uut << 'P' << quint64( _data[ i ] );
-    qDebug() << "pouet";
-    uut << 'U' << quint64( this ) << quint32( _data.size() );
+        uut << 'P' << _data[ i ]->_server_id;
+    uut << 'U' << _server_id << quint32( _data.size() );
 }
 
 void Lst::write_str( QDebug dbg ) const {
@@ -50,34 +48,31 @@ QString Lst::type() const {
     return "Lst";
 }
 
+void Lst::clear() {
+    _data.clear();
+}
+
 bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {
-    bool res = false;
-
-    // already existing elements
     int o = model_stack.size() - size;
-    for( int i = 0; i < qMin( size, _data.size() ); ++i ) {
-        if ( _data[ i ] != model_stack[ o + i ] ) {
-            _data[ i ]->rem_parent( this );
-            _data[ i ] = model_stack[ o + i ];
-            _data[ i ]->add_parent( this );
-            res = true;
+    QVector<Model *> nata; nata.resize( size );
+    for( int i = 0; i < size; ++i ) {
+        if ( not model_stack[ o + i ] ) {
+            model_stack.resize( o );
+            return false;
         }
+        nata[ i ] = model_stack[ o + i ];
     }
 
-    // new ones
-    for( int i = _data.size(); i < size; ++i ) {
-        _data << model_stack[ o + i ];
+    model_stack.resize( o );
+    if ( _data == nata )
+        return false;
+
+    for( int i = 0; i < _data.size(); ++i )
+        _data[ i ]->rem_parent( this );
+
+    _data = nata;
+    for( int i = 0; i < _data.size(); ++i )
         _data[ i ]->add_parent( this );
-    }
 
-    // trim
-    if ( _data.size() != size ) {
-        for( int i = size; i < _data.size(); ++i )
-            _data[ i ]->rem_parent( this );
-        _data.resize( size );
-        res = true;
-    }
-
-    model_stack.resize( model_stack.size() - size );
-    return res;
+    return true;
 }
