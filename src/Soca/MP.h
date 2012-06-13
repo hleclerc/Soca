@@ -66,6 +66,7 @@ public:
     operator int    () const;
     operator quint64() const;
     operator double () const;
+    operator QString() const;
 
     Model *model() const { return m; }
     QString type() const { return m ? m->type() : QString(); }
@@ -87,9 +88,12 @@ public:
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );
     static Model *conv( const MP &mp );
+    static Model *conv( quint64 val );
+    static Model *conv( quint32 val );
     static Model *conv( qint64 val );
     static Model *conv( qint32 val );
     static Model *conv( double val );
+    static Model *conv( QString st );
 
     ClientLoop *c;
     QString p;

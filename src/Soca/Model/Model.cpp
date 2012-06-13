@@ -76,6 +76,10 @@ bool Model::_set( qint64, qint32 ) {
     return false;
 }
 
+bool Model::_set( QString a ) {
+    return _set( a.toAscii().data(), a.size() );
+}
+
 bool Model::_set( Model *m ) {
     return false;
 }

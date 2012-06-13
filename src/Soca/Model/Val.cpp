@@ -8,8 +8,12 @@ Val::Val( qint64 man, qint32 exp ) : man( man ), exp( exp ) {
 Val::Val( double val ) {
     //double frexp( val, exp2 );
     if ( val ) {
-        exp = qint32( log10( fabs( val ) ) ) - 18;
+        exp = qint32( log10( fabs( val ) ) - 17 );
         man = round( val / pow( 10.0, exp ) );
+
+        if ( abs( man * pow( 10.0, exp ) - val ) > 1e-6 ) {
+            qDebug() << man << exp << "should give" << val;
+        }
     } else {
         exp = 0;
         man = 0;

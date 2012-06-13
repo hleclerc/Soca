@@ -45,10 +45,12 @@ public:
     virtual operator int       () const { return 0; }
     virtual operator quint64   () const { return 0; }
     virtual operator double    () const { return 0; }
+    virtual operator QString   () const { return "0"; }
 
     virtual bool _set( int info, QVector<Model *> &model_stack, QVector<QString> &string_stack );
     virtual bool _set( const char *str, int len );
     virtual bool _set( qint64 a, qint32 b );
+    virtual bool _set( QString a );
     virtual bool _set( Model *m );
     virtual bool _set( qint64 a );
 

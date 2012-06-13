@@ -1,6 +1,9 @@
 #include "../Sys/BinOut.h"
 #include "Str.h"
 
+Str::Str( QString data ) : _data( data ) {
+}
+
 Str::Str() {
 }
 
@@ -10,6 +13,10 @@ void Str::write_usr ( BinOut &nut, BinOut &uut, Database *db ) {
 
 void Str::write_str( QDebug dbg ) const {
     dbg.nospace() << _data;
+}
+
+Str::operator QString  () const {
+    return _data;
 }
 
 QString Str::type() const {

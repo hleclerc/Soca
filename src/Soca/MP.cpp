@@ -1,6 +1,7 @@
 #include "Model/ModelWithAttrAndName.h"
 #include "Model/LstWithType.h"
 #include "Model/Val.h"
+#include "Model/Str.h"
 
 #include <QtCore/QStringList>
 #include "Com/ClientLoop.h"
@@ -26,6 +27,10 @@ MP::operator quint64() const {
 
 MP::operator double() const {
     return m and not p.size() ? m->operator double() : 0;
+}
+
+MP::operator QString() const {
+    return m and not p.size() ? m->operator QString() : 0;
 }
 
 MP MP::operator[]( QString path ) const {
@@ -88,6 +93,14 @@ Model *MP::conv( const MP &mp ) {
     return mp.p.size() ? 0 : mp.m;
 }
 
+Model *MP::conv( quint64 val ) {
+    return new Val( val, 0 );
+}
+
+Model *MP::conv( quint32 val ) {
+    return new Val( val, 0 );
+}
+
 Model *MP::conv( qint64 val ) {
     return new Val( val, 0 );
 }
@@ -98,4 +111,8 @@ Model *MP::conv( qint32 val ) {
 
 Model *MP::conv( double val ) {
     return new Val( val );
+}
+
+Model *MP::conv( QString st ) {
+    return new Str( st );
 }
