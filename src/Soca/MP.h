@@ -13,7 +13,7 @@ public:
 
     MP( ClientLoop *c, Model *m, QString p );
     MP( ClientLoop *c, Model *m );
-    MP( Model *m );
+    MP( Model *m = 0 );
 
     MP operator[]( const char *path ) const { return operator[]( QString( path ) ); }
     MP operator[]( QString path ) const; ///< returns a sub-model
