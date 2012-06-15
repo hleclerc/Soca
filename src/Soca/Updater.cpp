@@ -31,9 +31,27 @@ void Updater::exec( const MP &mp ) {
     //
     if ( cbc == 1 ) {
         mp[ "_can_be_computed" ] = 0;
+        clear_error_list( mp );
         run( mp );
     } else if ( cbc == 3 ) {
         mp[ "_can_be_computed" ] = 2;
+        clear_error_list( mp );
         run( mp );
     }
+}
+
+void Updater::clear_error_list( const MP &mp ) {
+    mp[ "_messages" ].clear();
+}
+
+void Updater::add_error( const MP &mp, ErrorType type, QString title ) {
+    MP msg = MP::new_obj( "Model" );
+    msg[ "provenance" ] = "server";
+    msg[ "title" ] = title;
+    switch ( type ) {
+      case ET_Info: msg[ "type" ] = "msg_info"; break;
+      case ET_Error: msg[ "type" ] = "msg_error"; break;
+    }
+
+    mp[ "_messages" ] << msg;
 }
