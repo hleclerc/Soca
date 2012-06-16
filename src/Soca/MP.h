@@ -80,7 +80,7 @@ public:
     bool has_been_modified() const;
     bool has_been_directly_modified() const;
 
-    static MP new_obj( QString type );
+    static MP new_obj( QString type = "Model" );
 
     static MP new_lst();
     static MP new_lst( QString type ); ///< Lst with alternate type
