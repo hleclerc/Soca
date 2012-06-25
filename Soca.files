@@ -37,3 +37,4 @@ src/Soca/MP.h
 src/Soca/MP.cpp
 src/Soca/Updater.h
 src/Soca/Updater.cpp
+src/Soca/Model/TypedArray.h
