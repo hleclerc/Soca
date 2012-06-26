@@ -85,6 +85,8 @@ public:
     static MP new_lst();
     static MP new_lst( QString type ); ///< Lst with alternate type
 
+    static MP new_typed_array_qint32();
+
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );
     static Model *conv( const MP &mp );

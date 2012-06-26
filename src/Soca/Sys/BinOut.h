@@ -29,6 +29,11 @@ public:
         return *this;
     }
 
+    BinOut &write( const char *ptr, int len ) {
+        _data.append( ptr, len );
+        return *this;
+    }
+
     void clear() { _data.clear(); }
     int size() const { return _data.size(); }
 

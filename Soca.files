@@ -38,3 +38,6 @@ src/Soca/MP.cpp
 src/Soca/Updater.h
 src/Soca/Updater.cpp
 src/Soca/Model/TypedArray.h
+src/Soca/Sys/S.h
+src/Soca/Sys/BinRd.h
+src/Soca/Sys/BinRd.cpp

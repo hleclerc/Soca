@@ -1,5 +1,6 @@
 #include "Model/ModelWithAttrAndName.h"
 #include "Model/LstWithType.h"
+#include "Model/TypedArray.h"
 #include "Model/Val.h"
 #include "Model/Str.h"
 
@@ -83,6 +84,10 @@ MP MP::new_lst( QString type ) {
 
 MP MP::new_lst() {
     return MP( 0, new Lst );
+}
+
+MP MP::new_typed_array_qint32() {
+    return MP( 0, new TypedArray<qint32> );
 }
 
 QDebug operator<<( QDebug dbg, const MP &c ) {
