@@ -16,7 +16,7 @@ protected:
     void clear_error_list( const MP &mp );
     void add_error( const MP &mp, ErrorType type, QString title );
 
-    virtual void run( const MP &mp ) = 0;
+    virtual void run( MP mp ) = 0;
 };
 
 #endif // UPDATER_H

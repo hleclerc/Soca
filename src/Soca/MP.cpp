@@ -18,6 +18,11 @@ MP::MP( ClientLoop *c, Model *m ) : c( c ), m( m ) {
 MP::MP( Model *m ) : c( 0 ), m( m ) {
 }
 
+void MP::flush() {
+    if ( c and c->db )
+        c->db->flush();
+}
+
 MP::operator int() const {
     return m and not p.size() ? m->operator int() : 0;
 }

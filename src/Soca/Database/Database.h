@@ -17,6 +17,7 @@ public:
     Model  *signal_change( Model *m, bool from_ext = false ); ///<
     void    tmp_id_to_real( qint64 old_ptr, qint64 new_ptr );
     quint64 new_tmp_server_id( Model *m );
+    void    flush();
 
 private slots:
     void    end_round(); ///<

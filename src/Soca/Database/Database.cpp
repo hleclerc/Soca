@@ -81,6 +81,24 @@ quint64 Database::new_tmp_server_id( Model *m ) {
     return prev_tmp_server_id;
 }
 
+void Database::flush() {
+    BinOut nut, uut;
+    foreach( Model *m, changed_models ) {
+        if ( not m->_changed_from_ext )
+            m->write_usr( nut, uut, this );
+        m->_changed_from_ext = true;
+    }
+
+    // send data
+    if ( nut.size() or uut.size() ) {
+        nut << uut;
+        foreach( ClientLoop *c, clients ) {
+            *c << nut;
+            c->flush_out();
+        }
+    }
+}
+
 void Database::tmp_id_to_real( qint64 old_ptr, qint64 new_ptr ) {
     if ( old_ptr % 4 ) {
         QMap<qint64,Model *>::iterator iter = model_map.find( old_ptr );

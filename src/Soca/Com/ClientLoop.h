@@ -37,6 +37,7 @@ public:
     void reg_type_for_callback( QString type, QObject *receiver, const char *member ); ///<
     void reg_model( Model *m, QObject *receiver, const char *member );
 
+    void flush_out(); ///< send data
 
     Model *signal_change( Model *m ) {
         return db->signal_change( m );

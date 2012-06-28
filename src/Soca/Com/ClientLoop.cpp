@@ -1,4 +1,5 @@
 #include "../Model/ModelWithAttrAndName.h"
+#include "../Model/TypedArray.h"
 #include "../Model/Directory.h"
 #include "../Model/Bool.h"
 #include "../Model/Path.h"
@@ -83,6 +84,10 @@ void ClientLoop::reg_model( Model *m, QObject *receiver, const char *member ) {
     //    disconnect( this, SIGNAL(_model(Model*)), receiver, member );
 }
 
+void ClientLoop::flush_out() {
+    send_data();
+}
+
 void ClientLoop::rep_update_PI64( qint64 m, qint64 info ) {
     if ( Model *p = db->model( m ) )
         if ( p->_set( info ) )
@@ -140,6 +145,8 @@ void ClientLoop::rep_creation( qint64 m, const char *type_str, int type_len ) {
 
     Model *r = 0;
     if ( s == "Lst" ) r = new Lst;
+    else if ( s == "TypedArray_Float64" ) r = new TypedArray<double>;
+    else if ( s == "TypedArray_Int32" ) r = new TypedArray<qint32>;
     else if ( s == "Directory" ) r = new Directory;
     else if ( s == "Bool" ) r = new Bool;
     else if ( s == "Path" ) r = new Path;
@@ -195,11 +202,13 @@ void ClientLoop::readChannelFinished() {
 }
 
 void ClientLoop::send_data() {
-    out << 'E';
+    if ( out.size() ) {
+        out << 'E';
 
-    tcpSocket->write( out.data() );
-    out_signaled = false;
-    out.clear();
+        tcpSocket->write( out.data() );
+        out_signaled = false;
+        out.clear();
+    }
 }
 
 int ClientLoop::n_callback_model() const {

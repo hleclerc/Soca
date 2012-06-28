@@ -19,6 +19,9 @@ public:
     const T &operator[]( int index ) const { return _data[ index ]; }
     T &operator[]( int index ) { return _data[ index ]; }
 
+    virtual int size() const { return nb_items(); }
+    virtual int size( int index ) const { return _size[ index ]; }
+
     virtual void write_usr( BinOut &nut, BinOut &uut, Database *db ) {
         int ts = sizeof( int ) * ( 1 + _size.size() ) + sizeof( T ) * nb_items();
         uut << 'W' << _server_id << ts;
@@ -52,7 +55,7 @@ public:
             rd >> _data[ i ];
     }
 
-    int nb_items() {
+    int nb_items() const {
         return nb_items( _size );
     }
 
