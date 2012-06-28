@@ -5,39 +5,38 @@ bool has_something_to_compute_else_than( Model *m, Model *a ) {
         return false;
     m->_op_id = Model::_cur_op_id;
 
+    quint64 req = 0, rep = 0;
     for( int i = 0; i < m->size(); ++i ) {
-        Model *t = m->attr( i );
-        if ( m->key( i ) == "_can_be_computed" and t and t != a and t->operator int() % 2 )
-            return true;
-        if ( has_something_to_compute_else_than( t, a ) )
-            return true;
+        if ( Model *t = m->attr( i ) ) {
+            if ( m->key( i ) == "_computation_req_date" )
+                req = t->operator quint64();
+            else if ( m->key( i ) == "_computation_req_date" )
+                req = t->operator quint64();
+            else if ( has_something_to_compute_else_than( t, a ) )
+                return true;
+        }
+
     }
-    return false;
+
+    return req > rep and m != a;
 }
 
 void Updater::exec( const MP &mp ) {
     // nothing to compute ?
-    int cbc = mp[ "_can_be_computed" ];
-    // qDebug() << "in" << mp[ "_can_be_computed" ] << type();
-    if ( cbc % 2 == 0 )
+    quint64 req = mp[ "_computation_req_date" ];
+    quint64 rep = mp[ "_computation_rep_date" ];
+    if ( req <= rep )
         return;
 
     // waiting for another computation ?
     ++Model::_cur_op_id;
-    if ( has_something_to_compute_else_than( mp.model(), mp[ "_can_be_computed" ].model() ) )
+    if ( has_something_to_compute_else_than( mp.model(), mp.model() ) )
         return;
 
     //
-    if ( cbc == 1 ) {
-        clear_error_list( mp );
-        run( mp );
-        mp[ "_can_be_computed" ] = 0;
-    } else if ( cbc == 3 ) {
-        clear_error_list( mp );
-        run( mp );
-        mp[ "_can_be_computed" ] = 2;
-    }
-    // qDebug() << "on" << mp[ "_can_be_computed" ] << type();
+    mp[ "_computation_rep_date" ] = req;
+    clear_error_list( mp );
+    run( mp );
 }
 
 void Updater::clear_error_list( const MP &mp ) {
