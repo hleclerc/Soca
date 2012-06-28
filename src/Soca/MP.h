@@ -17,20 +17,23 @@ public:
 
     void flush(); ///< send modified data to ClientLoop
 
+    void reassign( MP mp ) { if ( mp.c ) c = mp.c; m = mp.m; }
 
     MP operator[]( const char *path ) const { return operator[]( QString( path ) ); }
     MP operator[]( QString path ) const; ///< returns a sub-model
     MP operator[]( int index ) const; ///< returns a sub-model
 
     MP &operator=( const MP &val ) {
-        if ( p.size() and m ) {
-            m->add_attr( p, val.m );
-            if ( c )
+        if ( val.m ) {
+            if ( p.size() and m ) {
+                m->add_attr( p, val.m );
+                if ( c )
+                    c->signal_change( m );
+                m = val.m;
+                p.clear();
+            } else if ( m and m->_set( val.m ) and c )
                 c->signal_change( m );
-            m = val.m;
-            p.clear();
-        } else if ( m and m->_set( val.m ) and c )
-            c->signal_change( m );
+        }
         return *this;
     }
 
