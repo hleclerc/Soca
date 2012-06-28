@@ -18,26 +18,26 @@ bool has_something_to_compute_else_than( Model *m, Model *a ) {
 void Updater::exec( const MP &mp ) {
     // nothing to compute ?
     int cbc = mp[ "_can_be_computed" ];
+    // qDebug() << "in" << mp[ "_can_be_computed" ] << type();
     if ( cbc % 2 == 0 )
         return;
 
     // waiting for another computation ?
     ++Model::_cur_op_id;
-    if ( has_something_to_compute_else_than( mp.model(), mp[ "_can_be_computed" ].model() ) ) {
-        // qDebug() << "yop";
+    if ( has_something_to_compute_else_than( mp.model(), mp[ "_can_be_computed" ].model() ) )
         return;
-    }
 
     //
     if ( cbc == 1 ) {
+        clear_error_list( mp );
+        run( mp );
         mp[ "_can_be_computed" ] = 0;
-        clear_error_list( mp );
-        run( mp );
     } else if ( cbc == 3 ) {
-        mp[ "_can_be_computed" ] = 2;
         clear_error_list( mp );
         run( mp );
+        mp[ "_can_be_computed" ] = 2;
     }
+    // qDebug() << "on" << mp[ "_can_be_computed" ] << type();
 }
 
 void Updater::clear_error_list( const MP &mp ) {

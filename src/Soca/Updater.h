@@ -17,6 +17,7 @@ protected:
     void add_error( const MP &mp, ErrorType type, QString title );
 
     virtual void run( MP mp ) = 0;
+    virtual QString type() const = 0;
 };
 
 #endif // UPDATER_H
