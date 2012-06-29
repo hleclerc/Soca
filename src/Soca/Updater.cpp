@@ -25,6 +25,7 @@ void Updater::exec( const MP &mp ) {
     // nothing to compute ?
     quint64 req = mp[ "_computation_req_date" ];
     quint64 rep = mp[ "_computation_rep_date" ];
+    qDebug() << req << rep << type();
     if ( req <= rep )
         return;
 
@@ -38,6 +39,7 @@ void Updater::exec( const MP &mp ) {
     //
     mp[ "_computation_rep_date" ] = req;
     clear_error_list( mp );
+    qDebug() << "run" << type();
     run( mp );
 }
 
