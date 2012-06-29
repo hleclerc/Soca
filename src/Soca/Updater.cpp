@@ -32,7 +32,7 @@ void Updater::exec( const MP &mp ) {
     // waiting for another computation ?
     ++Model::_cur_op_id;
     if ( has_something_to_compute_else_than( mp.model(), mp.model() ) ) {
-        qDebug() << "something to comupte !";
+        qDebug() << "something to compute !";
         return;
     }
 
