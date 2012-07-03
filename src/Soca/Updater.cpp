@@ -40,10 +40,12 @@ void Updater::exec( const MP &mp ) {
     }
 
     //
-    mp[ "_computation_rep_date" ] = req;
     clear_error_list( mp );
     qDebug() << "run" << type();
     run( mp );
+    mp[ "_computation_rep_date" ] = req;
+    if ( cm == 1 )
+        mp[ "_computation_mode" ] = 0;
 }
 
 void Updater::clear_error_list( const MP &mp ) {
