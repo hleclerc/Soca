@@ -28,6 +28,10 @@ void Updater::exec( const MP &mp ) {
     if ( req <= rep )
         return;
 
+    quint64 cm = mp[ "_computation_mode" ];
+    if ( cm == 0 )
+        return;
+
     // waiting for another computation ?
     ++Model::_cur_op_id;
     if ( has_something_to_compute_else_than( mp.model(), mp.model() ) ) {
