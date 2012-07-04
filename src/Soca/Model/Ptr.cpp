@@ -12,6 +12,10 @@ void Ptr::write_str( QDebug dbg ) const {
     dbg.nospace() << _data;
 }
 
+Ptr::operator quint64() const {
+    return _data;
+}
+
 QString Ptr::type() const {
     return "Ptr";
 }
