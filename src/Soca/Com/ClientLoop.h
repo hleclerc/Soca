@@ -25,23 +25,20 @@ public:
     ClientLoop( Database *db, const QHostAddress &address, quint16 port );
     virtual ~ClientLoop();
 
+    bool connected() const;
 
     int load( QString addr, QObject *receiver, const char *member ); ///< ask for model (or sub-model) at addr and call slot with the corresponding local copy (Model *)
     int load_ptr( quint64 ptr, QObject *receiver, const char *member ); ///<
 
-    bool connected() const;
-
     Model *load_async( QString addr ); ///< load a model, waiting for the answer if not already present in memory
     Model *load_ptr_async( quint64 ptr ); ///<
 
-    void reg_type_for_callback( QString type, QObject *receiver, const char *member ); ///<
-    void reg_model( Model *m, QObject *receiver, const char *member );
+    void reg_type_for_callback( QString type, QObject *receiver, const char *member ); ///< permit to get an event if an object of type $type is created on the server
+    void reg_model( Model *m, QObject *receiver, const char *member ); ///< call receiver->member if m is modified
 
     void flush_out(); ///< send data
 
-    Model *signal_change( Model *m ) {
-        return db->signal_change( m );
-    }
+    Model *signal_change( Model *m ) { return db->signal_change( m ); }
 
     void operator<<( const BinOut &data );
 
