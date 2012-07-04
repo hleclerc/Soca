@@ -29,7 +29,8 @@ void Updater::exec( const MP &mp ) {
         return;
 
     quint64 cm = mp[ "_computation_mode" ];
-    if ( cm == 0 )
+    quint64 cs = mp[ "_computation_state" ];
+    if ( cm == false && cs == false )
         return;
 
     // waiting for another computation ?
@@ -44,8 +45,8 @@ void Updater::exec( const MP &mp ) {
     qDebug() << "run" << type();
     run( mp );
     mp[ "_computation_rep_date" ] = req;
-    if ( cm == 1 )
-        mp[ "_computation_mode" ] = 0;
+    if ( cm == false and cs == true )
+        mp[ "_computation_state" ] = false;
 }
 
 void Updater::clear_error_list( const MP &mp ) {
