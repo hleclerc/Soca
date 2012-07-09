@@ -25,22 +25,28 @@ void Updater::exec( const MP &mp ) {
     // nothing to compute ?
     quint64 req = mp[ "_computation_req_date" ];
     quint64 rep = mp[ "_computation_rep_date" ];
-    qDebug() << req << rep << type();
     if ( req <= rep )
+        return;
+
+    quint64 cm = mp[ "_computation_mode" ];
+    quint64 cs = mp[ "_computation_state" ];
+    if ( cm == false && cs == false )
         return;
 
     // waiting for another computation ?
     ++Model::_cur_op_id;
     if ( has_something_to_compute_else_than( mp.model(), mp.model() ) ) {
-        qDebug() << "something to comupte !";
+        qDebug() << "something to compute !";
         return;
     }
 
     //
-    mp[ "_computation_rep_date" ] = req;
     clear_error_list( mp );
     qDebug() << "run" << type();
     run( mp );
+    mp[ "_computation_rep_date" ] = req;
+    if ( cm == false and cs == true )
+        mp[ "_computation_state" ] = false;
 }
 
 void Updater::clear_error_list( const MP &mp ) {

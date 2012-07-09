@@ -9,11 +9,13 @@ class Path : public ModelWithAttr {
 public:
     Path();
 
-    virtual void write_usr ( BinOut &nut, BinOut &uut, Database *db );
     virtual void write_str( QDebug dbg ) const;
+    virtual operator QString() const;
     virtual QString type() const;
 
-    // data is stored internally by the server
+    virtual bool _set( const char *str, int len );
+
+    QString _data;
 };
 
 #endif // PATH_H
