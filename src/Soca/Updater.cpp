@@ -10,8 +10,8 @@ bool has_something_to_compute_else_than( Model *m, Model *a ) {
         if ( Model *t = m->attr( i ) ) {
             if ( m->key( i ) == "_computation_req_date" )
                 req = t->operator quint64();
-            else if ( m->key( i ) == "_computation_req_date" )
-                req = t->operator quint64();
+            else if ( m->key( i ) == "_computation_rep_date" )
+                rep = t->operator quint64();
             else if ( has_something_to_compute_else_than( t, a ) )
                 return true;
         }
