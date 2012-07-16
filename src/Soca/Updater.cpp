@@ -43,7 +43,15 @@ void Updater::exec( const MP &mp ) {
     //
     clear_error_list( mp );
     qDebug() << "run" << type();
+
+    //sdl::set( "toto", "1" );
+    // QHttp
+    //system( "wget ..." );
+
     run( mp );
+
+    //sdl::set( "done", "1" );
+
     mp[ "_computation_rep_date" ] = req;
     if ( cm == false and cs == true )
         mp[ "_computation_state" ] = false;
