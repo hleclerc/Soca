@@ -18,7 +18,7 @@ public:
     virtual Model  *attr      ( int index   ) const;
     virtual int     size      () const;
     virtual QString type      () const;
-    virtual void    clear     ();
+    virtual bool    clear     ();
 
     virtual bool _set( int size, QVector<Model *> &model_stack, QVector<QString> &string_stack );
 

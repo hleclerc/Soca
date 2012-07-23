@@ -36,7 +36,7 @@ public:
     virtual int      size      () const;
     virtual QString  type      () const = 0;
     virtual void     write_usr ( BinOut &nut, BinOut &uut, Database *db ) = 0;
-    virtual void     clear     () {}
+    virtual bool     clear     () { return false; }
     quint64          get_server_id( Database *db ); ///<
     virtual QString  underlying_type() const;
 

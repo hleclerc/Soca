@@ -77,7 +77,7 @@ public:
     Model *model() const { return m; }
     QString type() const { return m ? m->type() : QString(); }
     int size() const { return m ? m->size() : 0; }
-    void clear() { if ( m ) { m->clear(); if ( c ) c->signal_change( m ); } }
+    void clear() { if ( m ) { if ( m->clear() and c ) c->signal_change( m ); } }
     bool ok() const { return m and not p.size(); }
 
     quint64 date_last_change() const;
