@@ -48,20 +48,20 @@ void Updater::exec( const MP &mp ) {
     // QHttp
     //system( "wget ..." );
 
-    run( mp );
-
+    if ( run( mp ) ) {
+        mp[ "_computation_rep_date" ] = req;
+        if ( cm == false and cs == true )
+            mp[ "_computation_state" ] = false;
+        add_error( mp, ET_Info, type() + " done" );
+    }
     //sdl::set( "done", "1" );
-
-    mp[ "_computation_rep_date" ] = req;
-    if ( cm == false and cs == true )
-        mp[ "_computation_state" ] = false;
 }
 
 void Updater::clear_error_list( const MP &mp ) {
     mp[ "_messages" ].clear();
 }
 
-void Updater::add_error( const MP &mp, ErrorType type, QString title ) {
+bool Updater::add_error( const MP &mp, ErrorType type, QString title ) {
     MP msg = MP::new_obj( "Model" );
     msg[ "provenance" ] = "server";
     msg[ "title" ] = title;
@@ -71,4 +71,5 @@ void Updater::add_error( const MP &mp, ErrorType type, QString title ) {
     }
 
     mp[ "_messages" ] << msg;
+    return false;
 }

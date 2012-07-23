@@ -14,9 +14,9 @@ public:
 
 protected:
     void clear_error_list( const MP &mp );
-    void add_error( const MP &mp, ErrorType type, QString title );
+    bool add_error( const MP &mp, ErrorType type, QString title );
 
-    virtual void run( MP mp ) = 0;
+    virtual bool run( MP mp ) = 0;
     virtual QString type() const = 0;
 };
 
