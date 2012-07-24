@@ -48,8 +48,12 @@ QString Lst::type() const {
     return "Lst";
 }
 
-void Lst::clear() {
-    _data.clear();
+bool Lst::clear() {
+    if ( _data.size() ) {
+        _data.clear();
+        return true;
+    }
+    return false;
 }
 
 bool Lst::_set( int size, QVector<Model *> &model_stack, QVector<QString> & ) {

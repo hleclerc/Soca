@@ -86,9 +86,12 @@ bool ModelWithAttr::_set( int size, QVector<Model *> &model_stack, QVector<QStri
             Attr attr;
             attr.key = key;
             attr.val = model_stack[ os + i ];
-            attr.val->add_parent( this );
-            _data << attr;
-            used << true;
+            // qDebug() << key << attr.val;
+            if ( attr.val ) {
+                attr.val->add_parent( this );
+                _data << attr;
+                used << true;
+            }
         }
     }
 

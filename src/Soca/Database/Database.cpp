@@ -103,8 +103,8 @@ void Database::tmp_id_to_real( qint64 old_ptr, qint64 new_ptr ) {
     if ( old_ptr % 4 ) {
         QMap<qint64,Model *>::iterator iter = model_map.find( old_ptr );
         if ( iter != model_map.end() ) {
-            model_map.erase( iter );
             model_map[ new_ptr ] = iter.value();
+            model_map.erase( iter );
         }
     }
 }
