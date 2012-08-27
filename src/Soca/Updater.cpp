@@ -51,7 +51,7 @@ void Updater::exec( const MP &mp ) {
 
     if ( run( mp ) ) {
         mp[ "_computation_rep_date" ] = req;
-        add_error( mp, ET_Info, "done" );
+        add_message( mp, ET_Info, "done" );
         if ( cm == false and cs == true )
             mp[ "_computation_state" ] = false;
     }
@@ -62,11 +62,12 @@ void Updater::clear_error_list( const MP &mp ) {
     mp[ "_messages" ].clear();
 }
 
-bool Updater::add_error( const MP &mp, ErrorType type, QString title ) {
+bool Updater::add_message( const MP &mp, ErrorType type, QString title ) {
     MP msg = MP::new_obj( "Model" );
     msg[ "provenance" ] = this->type();
     msg[ "title" ] = title;
     switch ( type ) {
+      case ET_Success: msg[ "type" ] = "msg_success"; break;
       case ET_Info: msg[ "type" ] = "msg_info"; break;
       case ET_Error: msg[ "type" ] = "msg_error"; break;
     }
