@@ -51,7 +51,7 @@ void Updater::exec( const MP &mp ) {
 
     if ( run( mp ) ) {
         mp[ "_computation_rep_date" ] = req;
-        add_message( mp, ET_Info, "done" );
+        //         add_message( mp, ET_Info, "done" );
         if ( cm == false and cs == true )
             mp[ "_computation_state" ] = false;
     }
