@@ -8,7 +8,7 @@ Str::Str() {
 }
 
 void Str::write_usr ( BinOut &nut, BinOut &uut, Database *db ) {
-    uut << 'W' << _server_id << _data;
+    uut << 'W' << get_server_id( db ) << _data;
 }
 
 void Str::write_str( QDebug dbg ) const {

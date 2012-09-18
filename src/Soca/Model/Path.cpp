@@ -1,11 +1,11 @@
 #include "../Sys/BinOut.h"
 #include "Path.h"
 
-Path::Path() {
+Path::Path( QString _data ) : _data( _data ) {
 }
 
 void Path::write_str( QDebug dbg ) const {
-    ModelWithAttr::write_str( dbg );
+    // ModelWithAttr::write_str( dbg );
     dbg.nospace() << _data;
 }
 
@@ -22,4 +22,8 @@ bool Path::_set( const char *str, int len ) {
     bool res = _data != tmp;
     _data = tmp;
     return res;
+}
+
+void Path::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
+    uut << 'W' << get_server_id( db ) << _data;
 }

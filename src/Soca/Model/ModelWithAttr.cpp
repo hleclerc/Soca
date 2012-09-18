@@ -13,7 +13,7 @@ void ModelWithAttr::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
         uut << 'P' << _data[ i ].val->_server_id;
         uut << 'p' << _data[ i ].key;
     }
-    uut << 'U' << _server_id << quint32( _data.size() );
+    uut << 'U' << get_server_id( db ) << quint32( _data.size() );
 }
 
 void ModelWithAttr::add_attr( QString key, Model *m ) {

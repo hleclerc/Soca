@@ -24,7 +24,7 @@ public:
 
     virtual void write_usr( BinOut &nut, BinOut &uut, Database *db ) {
         int ts = sizeof( int ) * ( 1 + _size.size() ) + sizeof( T ) * nb_items();
-        uut << 'W' << _server_id << ts;
+        uut << 'W' << get_server_id( db ) << ts;
 
         uut << (int)_size.size();
         for( int i = 0; i < _size.size(); ++i )
