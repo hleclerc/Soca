@@ -10,7 +10,7 @@ void Lst::write_usr( BinOut &nut, BinOut &uut, Database *db ) {
         _data[ i ]->write_nsr( nut, uut, db );
     for( int i = 0; i < _data.size(); ++i )
         uut << 'P' << _data[ i ]->_server_id;
-    uut << 'U' << _server_id << quint32( _data.size() );
+    uut << 'U' << get_server_id( db ) << quint32( _data.size() );
 }
 
 void Lst::write_str( QDebug dbg ) const {

@@ -1,6 +1,7 @@
 #include "Model/ModelWithAttrAndName.h"
 #include "Model/LstWithType.h"
 #include "Model/TypedArray.h"
+#include "Model/Path.h"
 #include "Model/Val.h"
 #include "Model/Str.h"
 
@@ -89,6 +90,10 @@ MP MP::new_lst( QString type ) {
 
 MP MP::new_lst() {
     return MP( 0, new Lst );
+}
+
+MP MP::new_path( QString filename ) {
+    return MP( 0, new Path( filename ) );
 }
 
 MP MP::new_typed_array_qint32() {

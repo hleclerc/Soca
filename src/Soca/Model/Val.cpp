@@ -12,7 +12,9 @@ Val::Val( double val ) {
         man = round( val / pow( 10.0, exp ) );
 
         if ( abs( man * pow( 10.0, exp ) - val ) > 1e-6 ) {
-            qDebug() << man << exp << "should give" << val;
+            // qDebug() << man << exp << "should give" << val;
+            exp = 0;
+            man = 0;
         }
     } else {
         exp = 0;

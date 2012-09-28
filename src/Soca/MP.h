@@ -90,6 +90,7 @@ public:
 
     static MP new_lst();
     static MP new_lst( QString type ); ///< Lst with alternate type
+    static MP new_path( QString filename );
 
     static MP new_typed_array_qint32();
 

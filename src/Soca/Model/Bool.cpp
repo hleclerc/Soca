@@ -5,7 +5,7 @@ Bool::Bool( bool val ) : _data( val ) {
 }
 
 void Bool::write_usr ( BinOut &nut, BinOut &uut, Database *db ) {
-    uut << 'Y' << _server_id << (unsigned char)_data;
+    uut << 'Y' << get_server_id( db ) << (unsigned char)_data;
 }
 
 void Bool::write_str( QDebug dbg ) const {
