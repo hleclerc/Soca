@@ -11,11 +11,10 @@ public:
     typedef enum { ET_Success, ET_Info, ET_Error } ErrorType;
 
     void exec( const MP &mp );
+    bool add_message( const MP &mp, ErrorType type, QString title );
 
 protected:
     void clear_error_list( const MP &mp );
-    bool add_message( const MP &mp, ErrorType type, QString title );
-
     virtual bool run( MP mp ) = 0;
     virtual QString type() const = 0;
 };
