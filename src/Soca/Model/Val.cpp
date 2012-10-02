@@ -1,5 +1,7 @@
 #include "../Sys/BinOut.h"
 #include "Val.h"
+
+#include <limits>
 #include <cmath>
 
 Val::Val( qint64 man, qint32 exp ) : man( man ), exp( exp ) {
@@ -7,7 +9,10 @@ Val::Val( qint64 man, qint32 exp ) : man( man ), exp( exp ) {
 
 Val::Val( double val ) {
     //double frexp( val, exp2 );
-    if ( val ) {
+    if ( isnan( val ) ) {
+        man = 0;
+        exp = std::numeric_limits<qint32>::max();
+    } else if ( val ) {
         exp = qint32( log10( fabs( val ) ) - 17 );
         man = round( val / pow( 10.0, exp ) );
 
@@ -65,5 +70,7 @@ Val::operator quint64() const {
 }
 
 Val::operator double() const {
+    if ( exp == std::numeric_limits<qint32>::max() )
+        return NAN;
     return man * std::pow( 10.0, exp );
 }
