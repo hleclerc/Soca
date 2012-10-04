@@ -49,12 +49,12 @@ void Updater::exec( const MP &mp ) {
     // QHttp
     //system( "wget ..." );
 
-    if ( run( mp ) ) {
-        mp[ "_computation_rep_date" ] = req;
-        //         add_message( mp, ET_Info, "done" );
-        if ( cm == false and cs == true )
-            mp[ "_computation_state" ] = false;
-    }
+    run( mp );
+
+    mp[ "_computation_rep_date" ] = req;
+    //         add_message( mp, ET_Info, "done" );
+    if ( cm == false and cs == true )
+        mp[ "_computation_state" ] = false;
     //sdl::set( "done", "1" );
 }
 
