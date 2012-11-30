@@ -24,6 +24,7 @@
 #include "Model/Path.h"
 #include "Model/Val.h"
 #include "Model/Str.h"
+#include "Model/Ptr.h"
 
 #include <QtCore/QStringList>
 #include "Com/ClientLoop.h"
@@ -114,6 +115,18 @@ MP MP::new_lst() {
 
 MP MP::new_path( QString filename ) {
     return MP( 0, new Path( filename ) );
+}
+
+MP MP::new_file( QString name, MP model ) {
+    MP res = new_obj( "File" );
+    res[ "name" ] = name;
+    res[ "_ptr" ] = new_ptr( model );
+    res[ "_info" ] = new_obj();
+    return res;
+}
+
+MP MP::new_ptr( MP model ) {
+    return MP( 0, new Ptr( (qint64)model.m ) );
 }
 
 MP MP::new_typed_array_qint32() {

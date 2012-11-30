@@ -27,7 +27,7 @@
 */
 class Ptr : public Model {
 public:
-    Ptr();
+    Ptr( qint64 _data = 0 );
 
     virtual void    write_usr ( BinOut &nut, BinOut &uut, Database *db );
     virtual void    write_str( QDebug dbg ) const;
