@@ -226,6 +226,7 @@ void ClientLoop::send_data() {
         out << 'E';
 
         tcpSocket->write( out.data() );
+        tcpSocket->flush();
         out_signaled = false;
         out.clear();
     }
