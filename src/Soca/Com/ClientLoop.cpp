@@ -227,9 +227,17 @@ void ClientLoop::send_data() {
 
         tcpSocket->write( out.data() );
         tcpSocket->flush();
+        while ( tcpSocket->bytesToWrite() )
+            tcpSocket->waitForBytesWritten();
         out_signaled = false;
         out.clear();
     }
+}
+
+
+bool ClientLoop::has_something_to_send() const {
+    qDebug() << tcpSocket->bytesToWrite();
+    return out_signaled or tcpSocket->bytesToWrite();
 }
 
 int ClientLoop::n_callback_model() const {

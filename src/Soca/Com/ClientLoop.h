@@ -62,6 +62,9 @@ public:
 
     void operator<<( const BinOut &data );
 
+
+    bool has_something_to_send() const;
+
     Database *db;
 
 private slots:

@@ -33,6 +33,10 @@ Database::Database() {
     prev_tmp_server_id = 0;
 }
 
+Database::~Database() {
+    flush();
+}
+
 void Database::_call_onchange_rec( Model *m ) {
     if ( m->_date_last_change < cur_date ) {
         _call_onchange_loc( m, 0 );

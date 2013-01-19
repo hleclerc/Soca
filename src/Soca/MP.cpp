@@ -101,6 +101,11 @@ bool MP::has_been_directly_modified() const {
     return m and not p.size() ? m->has_been_directly_modified( c->db->cur_date ) : false;
 }
 
+void MP::signal_change() {
+    if ( c and m )
+        c->signal_change( m );
+}
+
 MP MP::new_obj( QString type ) {
     return MP( 0, new ModelWithAttrAndName( type ) );
 }

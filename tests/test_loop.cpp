@@ -1,3 +1,4 @@
+#include <Soca/Model/TypedArray.h>
 #include <Soca/Com/SodaClient.h>
 
 int main( int argc, char **argv ) {
@@ -5,12 +6,14 @@ int main( int argc, char **argv ) {
     if ( not sc.connected() )
         return 1;
 
-    MP obj = MP::new_obj();
-
-    MP mp = sc.load( "/home/monkey/sessions" );
-    mp.clear();
+    MP mp = sc.load( "/pouet" );
     srand( time( NULL ) );
-    mp << MP::new_file( QString( "toto_%1" ).arg( rand() ), obj );
+    // mp.clear();
 
-    mp.flush();
+    static_cast<TypedArray<double> *>( mp.model() )->_data.resize( 4 * 40000 );
+    static_cast<TypedArray<double> *>( mp.model() )->_data[ 0 ] = rand();
+    static_cast<TypedArray<double> *>( mp.model() )->_size[ 1 ] = 40000;
+    mp.signal_change();
+
+    // mp.flush();
 }
