@@ -67,7 +67,9 @@ public:
     Event event(); ///< wait for an event
 
     bool   connected() const;
+    bool   has_something_to_send() const;
 
+    void _wait();
 private slots:
     void reg_type_callback_auto_reg( quint64 ptr ); ///< called if an object of a registered type is created on the server
     void reg_type_callback( quint64 ptr ); ///< called if an object of a registered type is created on the server
@@ -77,7 +79,6 @@ private slots:
     void disconnected(); ///<
 
 private:
-    void _wait();
     void _exit(); ///< exit from qevent_loop
     MP   _wait_load( int n ); ///< asynchronous load
 

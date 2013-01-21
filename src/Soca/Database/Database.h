@@ -33,6 +33,7 @@ class Database : public QObject {
     Q_OBJECT
 public:
     Database();
+    ~Database();
     Model  *model( qint64 m ) const; ///< server_id -> local Model *
     Model  *signal_change( Model *m, bool from_ext = false ); ///<
     void    tmp_id_to_real( qint64 old_ptr, qint64 new_ptr );

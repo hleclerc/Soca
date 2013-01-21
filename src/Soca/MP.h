@@ -106,6 +106,8 @@ public:
     bool has_been_modified() const;
     bool has_been_directly_modified() const;
 
+    void signal_change();
+
     static MP new_obj( QString type = "Model" );
 
     static MP new_lst();

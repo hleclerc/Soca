@@ -40,6 +40,7 @@ SodaClient::SodaClient( const QHostAddress &address, quint16 port ) {
 }
 
 SodaClient::~SodaClient() {
+    database->flush();
     delete client_loop;
     delete database;
     if ( --_nb_inst == 0 ) {
@@ -66,6 +67,10 @@ MP SodaClient::load_ptr( quint64 ptr ) {
 
 MP SodaClient::load( QString path ) {
     return _wait_load( client_loop->load( path, this, SLOT(load_callback(Model*,int)) ) );
+}
+
+bool SodaClient::has_something_to_send() const {
+    return client_loop->has_something_to_send();
 }
 
 SodaClient::Event SodaClient::event() {

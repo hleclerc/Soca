@@ -6,3 +6,7 @@ all: src/Soca/Com/ClientLoop_parser.h
 
 ext/Sipe:
 	mkdir -p ext; cd ext; test -e Sipe || ( test -e ../../Sipe && ln -s `pwd`/../../Sipe . ) || git clone git@github.com:hleclerc/Sipe.git
+
+test_loop:
+	metil_comp -Isrc tests/test_loop.cpp
+	
