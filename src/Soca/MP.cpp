@@ -137,6 +137,10 @@ QDebug operator<<( QDebug dbg, const MP &c ) {
     return dbg << c.m;
 }
 
+quint64 MP::get_server_id(){
+    return model()->get_server_id(c->db);
+}
+
 Model *MP::conv( const MP &mp ) {
     return mp.p.size() ? 0 : mp.m;
 }
@@ -164,3 +168,5 @@ Model *MP::conv( double val ) {
 Model *MP::conv( QString st ) {
     return new Str( st );
 }
+
+

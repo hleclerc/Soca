@@ -115,6 +115,7 @@ public:
     static MP new_ptr( MP model );
 
     static MP new_typed_array_qint32();
+    quint64 get_server_id(); ///<
 
 private:
     friend QDebug operator<<( QDebug dbg, const MP &c );

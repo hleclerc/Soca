@@ -224,7 +224,7 @@ void ClientLoop::readChannelFinished() {
 void ClientLoop::send_data() {
     if ( out.size() ) {
         out << 'E';
-
+        //qDebug() << "#####################on passe la dedans !###########################";
         tcpSocket->write( out.data() );
         out_signaled = false;
         out.clear();
