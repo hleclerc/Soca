@@ -75,6 +75,15 @@ void Updater::exec( const MP &mp ) {
     //         add_message( mp, ET_Info, "done" );
     if ( cm == false and cs == true )
         mp[ "_computation_state" ] = false;
+    
+    mp[ "_ready_state" ]        = false;
+    mp[ "_computation_state" ]  = false;
+    mp[ "_pending_state" ]      = false;
+    mp[ "_processing_state" ]   = false;
+    mp[ "_finish_state" ]       = true;
+    mp[ "_stop_state" ]         = false;
+    mp[ "_computation_mode" ] = false; 
+    //mp.flush();
     //sdl::set( "done", "1" );
 }
 
