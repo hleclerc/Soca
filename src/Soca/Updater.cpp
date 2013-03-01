@@ -41,6 +41,7 @@ bool has_something_to_compute_else_than( Model *m, Model *a ) {
     return req > rep and m != a;
 }
 
+
 void Updater::exec( const MP &mp ) {
     // nothing to compute ?
     quint64 req = mp[ "_computation_req_date" ];
@@ -57,6 +58,10 @@ void Updater::exec( const MP &mp ) {
     ++Model::_cur_op_id;
     if ( has_something_to_compute_else_than( mp.model(), mp.model() ) ) {
         qDebug() << "something to compute !";
+        //mp[ "_computation_mode" ] = true;
+//         sleep(1);
+//         quint64 mp_server_id = mp.get_server_id();
+//         mp = sc.load_ptr(mp_server_id);
         return;
     }
 
